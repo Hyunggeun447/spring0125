@@ -1,4 +1,4 @@
-package hello.core.membar;
+package hello.core.member;
 
 public enum Grade {
     BASIC,

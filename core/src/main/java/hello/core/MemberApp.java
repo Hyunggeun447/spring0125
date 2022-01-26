@@ -1,8 +1,8 @@
 package hello.core;
 
-import hello.core.membar.Grade;
-import hello.core.membar.Member;
-import hello.core.membar.MemberService;
+import hello.core.member.Grade;
+import hello.core.member.Member;
+import hello.core.member.MemberService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
