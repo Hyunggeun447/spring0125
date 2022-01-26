@@ -17,6 +17,7 @@ public class AppConfig {
     // 멤버 저장소는 MemoryMemberRep 로
     @Bean
     public MemberRepository memberRepository() {
+//        System.out.println("Call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
@@ -29,18 +30,21 @@ public class AppConfig {
     // 할인 정책을 Rate로 변경
     @Bean
     public DiscountPolicy discountPolicy() {
+//        System.out.println("Call AppConfig.discountPolicy");
         return new RateDiscountPolicy();
     }
 
     //멤버 서비스는 멤버 임플로, 멤버 임플은 멤버 저장소로
     @Bean
     public MemberService memberService() {
+//        System.out.println("Call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     // 오더 서비스는 오더 서비스 임블을, 오더 서비스 임블은 맴버 저장소, 할인 정책을 사용.
     @Bean
     public OrderService orderService() {
+//        System.out.println("Call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
