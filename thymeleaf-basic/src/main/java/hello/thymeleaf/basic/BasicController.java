@@ -32,7 +32,7 @@ public class BasicController {
 
     @GetMapping("/variable")
     public String variable(Model model) {
-        User userA = new User("userA",10);
+        User userA = new User("userA", 10);
         User userB = new User("userB", 20);
 
         List<User> list = new ArrayList<>();
@@ -82,6 +82,63 @@ public class BasicController {
         model.addAttribute("data", "Spring!A!A!A!");
         return "basic/literal";
     }
+
+    @GetMapping("/operation")
+    public String operation(Model model) {
+        model.addAttribute("nullData", null);
+        model.addAttribute("data", "Spring!!!");
+        return "basic/operation";
+    }
+
+    @GetMapping("/attribute")
+    public String attribute() {
+        return "basic/attribute";
+    }
+
+    @GetMapping("/each")
+    public String each(Model model) {
+        addUsers(model);
+        return "basic/each";
+    }
+
+    @GetMapping("/condition")
+    public String condition(Model model) {
+        addUsers(model);
+        return "basic/condition";
+    }
+
+    @GetMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("data", "spring!!@#");
+        return "basic/comments";
+    }
+
+    @GetMapping("/block")
+    public String block(Model model) {
+        addUsers(model);
+        return "basic/block";
+    }
+
+    @GetMapping("/javascript")
+    public String javascript(Model model) {
+        addUsers(model);
+        model.addAttribute("user", new User("userA", 10));
+        return "basic/javascript";
+    }
+
+
+    private void addUsers(Model model) {
+
+        List<User> list = new ArrayList<>();
+        list.add(new User("userA", 10));
+        list.add(new User("userB", 20));
+        list.add(new User("userC", 30));
+        list.add(new User("userD", 40));
+
+        model.addAttribute("users", list);
+    }
+
+
 
     @Data
     static class User {
