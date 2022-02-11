@@ -40,7 +40,7 @@ public class LoginCheckFilter implements Filter {
         } catch (Exception e) {
             throw e;
         }finally {
-            log.info("Ene {}", requestURI);
+            log.info("End {}", requestURI);
         }
     }
 
