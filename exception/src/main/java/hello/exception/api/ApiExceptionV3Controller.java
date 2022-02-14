@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiExceptionV3Controller {
 
     @GetMapping("/api3/members/{id}")
-
     public MemberDto getMember(@PathVariable("id") String id) {
 
         if (id.equals("ex")) {
