@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestControllerAdvice
+//@ControllerAdvice는 1. 패키지 경로, 2. 어노테이션, 3. 혹은 각각 으로 대상지정 가능
+@RestControllerAdvice(basePackages = "hello.exception.api")
 public class ExControllerAdvice {
 
 
