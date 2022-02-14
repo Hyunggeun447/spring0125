@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TypeconverterApplication {
+public class TypeConverterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TypeconverterApplication.class, args);
+		SpringApplication.run(TypeConverterApplication.class, args);
 	}
 
 }
