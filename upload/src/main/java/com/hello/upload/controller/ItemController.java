@@ -4,7 +4,6 @@ import com.hello.upload.domain.Item;
 import com.hello.upload.domain.ItemRepository;
 import com.hello.upload.domain.UploadFile;
 import com.hello.upload.file.FileStore;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
