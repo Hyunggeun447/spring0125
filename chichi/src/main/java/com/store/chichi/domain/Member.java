@@ -1,4 +1,4 @@
-package com.store.chichi;
+package com.store.chichi.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,11 +17,11 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
+    private String name; //이름
 
-    private String password;
+    private String nickname; //닉네임Id
 
-    private String nickname;
+    private String password; //비밀번호
 
     private String eMail;
 
@@ -33,8 +33,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-    @Enumerated
-    private MemberGrade memberGrade;
+    @Enumerated(EnumType.STRING)
+    private MemberGrade memberGrade; //    ADMIN, NORMAL
+
 
 
 }
