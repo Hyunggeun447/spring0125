@@ -1,4 +1,4 @@
-package jpabook.jpashop.domain;
+package com.store.chichi;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,20 +8,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Member {
 
     @Id
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+
     private String name;
+
+    private String password;
+
+    private String nickname;
+
+    private String eMail;
+
+    private String phoneNumber;
 
     @Embedded
     private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
+    @Enumerated
+    private MemberGrade memberGrade;
 
 
 }
