@@ -46,7 +46,7 @@ public class MemberService {
     }
 
     //회원 단일 id 조회
-    public Member findOne(Long id) {
+    public Member findById(Long id) {
         return memberRepository.findById(id);
     }
 
