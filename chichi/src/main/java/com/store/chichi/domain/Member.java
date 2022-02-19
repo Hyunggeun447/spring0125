@@ -1,6 +1,8 @@
 package com.store.chichi.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -36,6 +39,16 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberGrade memberGrade; //    ADMIN, NORMAL
 
-
-
+    public Member(String name, String nickname, String password,
+                  String eMail, String phoneNumber, Address address,
+                  List<Order> orders, MemberGrade memberGrade) {
+        this.name = name;
+        this.nickname = nickname;
+        this.password = password;
+        this.eMail = eMail;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.orders = orders;
+        this.memberGrade = memberGrade;
+    }
 }

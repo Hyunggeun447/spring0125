@@ -1,6 +1,8 @@
 package com.store.chichi.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
 
@@ -25,7 +28,7 @@ public class Order {
     private Member member;
 
     //연관관계 메서드 order - member
-    public void setMember(Member member) {
+    public void addMember(Member member) {
         this.member = member;
         member.getOrders().add(this);
     }
@@ -38,7 +41,7 @@ public class Order {
     private Delivery delivery;
 
     //연관관계 메서드 order - delivery
-    public void setDelivery(Delivery delivery) {
+    public void addDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
 
@@ -48,7 +51,7 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //연관관계 메서드 order - orderItem
-    public void setOrderItems(OrderItem orderItem) {
+    public void addOrderItems(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
 
@@ -57,9 +60,12 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //    ORDER, CANCEL
 
-
-
-
-
-
+    public Order(Member member, LocalDateTime orderDate,
+                 Delivery delivery, List<OrderItem> orderItems, OrderStatus status) {
+        this.member = member;
+        this.orderDate = orderDate;
+        this.delivery = delivery;
+        this.orderItems = orderItems;
+        this.status = status;
+    }
 }
