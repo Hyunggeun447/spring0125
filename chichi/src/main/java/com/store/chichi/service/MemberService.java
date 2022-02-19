@@ -19,16 +19,16 @@ public class MemberService {
 
     @Transactional
     public Long join(Member member) {
-        checkSameNameMember(member);
+        checkSameNicnameMember(member);
         memberRepository.save(member);
         return member.getId();
 
     }
 
-    private void checkSameNameMember(Member member) {
+    private void checkSameNicnameMember(Member member) {
 
-        List<Member> byName = memberRepository.findByName(member.getName());
-        if (!byName.isEmpty()) {
+        List<Member> byNickname = memberRepository.findByNickname(member.getNickname());
+        if (!byNickname.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 아이디입니다.");
         }
     }

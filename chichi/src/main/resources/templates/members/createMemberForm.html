@@ -19,13 +19,13 @@
         </div>
         <div class="form-group">
             <label th:for="zipcode">비밀번호</label>
-            <input type="text" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력하세요"
+            <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력하세요"
                    th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{password}">Incorrect date</p>
         </div>
         <div class="form-group">
             <label th:for="zipcode">비밀번호2</label>
-            <input type="text" th:field="*{password2}" class="form-control" placeholder="비밀번호를 입력하세요"
+            <input type="password" th:field="*{password2}" class="form-control" placeholder="비밀번호를 입력하세요"
                    th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{password2}">Incorrect date</p>
         </div>

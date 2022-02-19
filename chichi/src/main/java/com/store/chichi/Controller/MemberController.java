@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 
 
 @Slf4j
@@ -54,4 +55,13 @@ public class MemberController {
         return "redirect:/";
 
     }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> allMembers = memberService.findAllMembers();
+        model.addAttribute("members", allMembers);
+        return "members/memberList";
+    }
+
+
 }
