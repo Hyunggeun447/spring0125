@@ -1,7 +1,9 @@
 package com.store.chichi.domain;
 
 import com.store.chichi.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "order_item")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
 
@@ -28,9 +31,24 @@ public class OrderItem {
     private Item item;
 
     private int count;
-    private int totalPrice;
+    private int orderPrice;
 
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
 
+        item.removeStock(count);
+        return orderItem;
+    }
 
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 
 }

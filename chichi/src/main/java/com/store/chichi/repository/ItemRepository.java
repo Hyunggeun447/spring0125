@@ -23,6 +23,7 @@ public class ItemRepository {
     }
 
     public List<Item> findAll() {
+
         return em.createQuery("select i from Item i", Item.class).getResultList();
     }
 
@@ -31,4 +32,11 @@ public class ItemRepository {
                 .setParameter("itemName", itemName)
                 .getResultList();
     }
+
+    public void deleteItemById(Long itemId) {
+        Item item = em.find(Item.class, itemId);
+        em.remove(item);
+    }
+
+
 }

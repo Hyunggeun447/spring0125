@@ -1,6 +1,8 @@
 package com.store.chichi.service;
 
+import com.store.chichi.domain.item.Color;
 import com.store.chichi.domain.item.Item;
+import com.store.chichi.domain.item.Size;
 import com.store.chichi.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,16 @@ public class ItemService {
         return item.getId();
     }
 
+    @Transactional
+    public void updateItem(Long itemId, String itemName, int price, int stockQuantity, Size size, Color color) {
+        Item item = itemRepository.findById(itemId);
+        item.setItemName(itemName);
+        item.setItemSize(size);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
+        item.setItemColor(color);
+    }
+
     public Item findById(Long itemId) {
         return itemRepository.findById(itemId);
     }
@@ -31,5 +43,9 @@ public class ItemService {
 
     public List<Item> findByName(String itemName) {
         return itemRepository.findByName(itemName);
+    }
+
+    public void deleteItemById(Long itemId) {
+        itemRepository.deleteItemById(itemId);
     }
 }

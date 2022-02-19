@@ -26,11 +26,29 @@ public abstract class Item {
 
     @Enumerated
     private Size itemSize; //XXS,XS,S,M,L,XL
+
     @Enumerated
     private Color itemColor; //RED,BLUE,BLACK,WHITE,YELLOW
 
     private LocalDateTime generateTime;
     private int price;
     private int stockQuantity;
+
+
+    /**
+     * 재고 관련
+     */
+
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        if (stockQuantity < quantity) {
+            throw new RuntimeException("재고부족");
+        }
+        this.stockQuantity -= quantity;
+
+    }
 
 }

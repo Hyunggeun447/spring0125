@@ -42,7 +42,7 @@ public class MemberRepository {
                 .getResultList();
     }
     // 닉네임으로 조회
-    public List<Member> findByAddress(String nickname) {
+    public List<Member> findByNickname(String nickname) {
         return em.createQuery("select m from Member m where m.nickname= :nickname", Member.class)
                 .setParameter("nickname", nickname)
                 .getResultList();

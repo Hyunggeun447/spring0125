@@ -40,8 +40,7 @@ public class Member {
     private MemberGrade memberGrade; //    ADMIN, NORMAL
 
     public Member(String name, String nickname, String password,
-                  String eMail, String phoneNumber, Address address,
-                  List<Order> orders, MemberGrade memberGrade) {
+                  String eMail, String phoneNumber) {
         this.name = name;
         this.nickname = nickname;
         this.password = password;
@@ -51,4 +50,5 @@ public class Member {
         this.orders = orders;
         this.memberGrade = memberGrade;
     }
+
 }

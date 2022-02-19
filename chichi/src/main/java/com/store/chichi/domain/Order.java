@@ -1,9 +1,11 @@
 package com.store.chichi.domain;
 
+import com.store.chichi.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -51,7 +53,7 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //연관관계 메서드 order - orderItem
-    public void addOrderItems(OrderItem orderItem) {
+    public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
 
@@ -60,12 +62,37 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //    ORDER, CANCEL
 
-    public Order(Member member, LocalDateTime orderDate,
-                 Delivery delivery, List<OrderItem> orderItems, OrderStatus status) {
-        this.member = member;
-        this.orderDate = orderDate;
-        this.delivery = delivery;
-        this.orderItems = orderItems;
-        this.status = status;
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.ORDER);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+
+        return order;
     }
+
+    public void cancel() {
+        if (delivery.getDeliveryStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("배송 완료된 상품");
+        } else if (delivery.getDeliveryStatus() == DeliveryStatus.DEPART) {
+            throw new IllegalStateException("이미 출발한 상품");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
+
 }
