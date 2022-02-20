@@ -1,6 +1,9 @@
 package com.store.chichi.repository;
 
+import com.store.chichi.domain.item.Color;
 import com.store.chichi.domain.item.Item;
+import com.store.chichi.domain.item.Shirt;
+import com.store.chichi.domain.item.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +40,8 @@ public class ItemRepository {
         Item item = em.find(Item.class, itemId);
         em.remove(item);
     }
+
+
 
 
 }

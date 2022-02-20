@@ -27,6 +27,7 @@ public class OrderService {
 
         Delivery delivery = new Delivery();
         delivery.setAddress(address);
+        delivery.setDeliveryStatus(DeliveryStatus.READY);
 
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 

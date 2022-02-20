@@ -2,6 +2,7 @@ package com.store.chichi.repository;
 
 import com.store.chichi.domain.Address;
 import com.store.chichi.domain.Member;
+import com.store.chichi.domain.MemberGrade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public class MemberRepository {
 
     private final EntityManager em;
+
+
+
 
     public void save(Member member) {
         em.persist(member);
@@ -35,16 +39,20 @@ public class MemberRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
+
     // 주소로 조회
     public List<Member> findByAddress(Address address) {
         return em.createQuery("select m from Member m where m.address= :address", Member.class)
                 .setParameter("address", address)
                 .getResultList();
     }
+
     // 닉네임으로 조회
     public List<Member> findByNickname(String nickname) {
         return em.createQuery("select m from Member m where m.nickname= :nickname", Member.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
     }
+
+
 }

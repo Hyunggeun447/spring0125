@@ -19,13 +19,13 @@ public class MemberService {
 
     @Transactional
     public Long join(Member member) {
-        checkSameNicnameMember(member);
+        checkSameNicknameMember(member);
         memberRepository.save(member);
         return member.getId();
 
     }
 
-    private void checkSameNicnameMember(Member member) {
+    private void checkSameNicknameMember(Member member) {
 
         List<Member> byNickname = memberRepository.findByNickname(member.getNickname());
         if (!byNickname.isEmpty()) {
@@ -65,4 +65,6 @@ public class MemberService {
     public List<Member> findByName(String memberName) {
         return memberRepository.findByName(memberName);
     }
+
+
 }

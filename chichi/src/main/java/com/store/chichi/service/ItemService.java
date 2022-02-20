@@ -2,6 +2,7 @@ package com.store.chichi.service;
 
 import com.store.chichi.domain.item.Color;
 import com.store.chichi.domain.item.Item;
+import com.store.chichi.domain.item.Shirt;
 import com.store.chichi.domain.item.Size;
 import com.store.chichi.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,18 @@ public class ItemService {
 
     @Transactional
     public Long saveItem(Item item) {
+
+        sameItemNameFilter(item);
         itemRepository.save(item);
         return item.getId();
+    }
+
+    private void sameItemNameFilter(Item item) {
+        String itemName = item.getItemName();
+        List<Item> byName = itemRepository.findByName(itemName);
+        if (!byName.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 제품명입니다.");
+        }
     }
 
     @Transactional
@@ -48,4 +59,6 @@ public class ItemService {
     public void deleteItemById(Long itemId) {
         itemRepository.deleteItemById(itemId);
     }
+
+
 }

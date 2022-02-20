@@ -1,5 +1,10 @@
 package com.store.chichi;
 
+import com.store.chichi.domain.Member;
+import com.store.chichi.domain.MemberGrade;
+import com.store.chichi.service.ItemService;
+import com.store.chichi.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +13,8 @@ public class ChichiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChichiApplication.class, args);
+
+
 	}
 
 }
