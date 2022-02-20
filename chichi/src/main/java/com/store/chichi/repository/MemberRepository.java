@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -52,6 +53,17 @@ public class MemberRepository {
         return em.createQuery("select m from Member m where m.nickname= :nickname", Member.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
+    }
+
+    /**
+     * 로그인 시스템
+     * findAll로 모든 member list를 얻는다.
+     * stream으로 list을 훑음.
+     * filter로 nickName이 같은 member를 구함.
+     * @return
+     */
+    public Optional<Member> findByLoginId(String nickName) {
+        return findAll().stream().filter(member -> member.getNickname().equals(nickName)).findFirst();
     }
 
 

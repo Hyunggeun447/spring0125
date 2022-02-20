@@ -1,4 +1,4 @@
-package com.store.chichi.Controller;
+package com.store.chichi.controller.member;
 
 import lombok.Getter;
 import lombok.Setter;

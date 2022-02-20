@@ -25,7 +25,7 @@ public class Default {
     //Default
     @PostConstruct
     public void init() {
-        Member member = new Member("Kim", "abcd1234", "1234!", "abcd@aaa.com", "01021345678");
+        Member member = new Member("Kim", "abcd1234", "1234", "abcd@aaa.com", "01021345678");
         member.setMemberGrade(MemberGrade.ADMIN);
         memberService.join(member);
         Item item = new Shirt();

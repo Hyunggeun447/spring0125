@@ -13,9 +13,9 @@
         <p>
             <button class="btn btn-lg btn-secondary"
                     onclick="location.href='items.html'"
-                    th:onclick="|location.href='@{/login}'|"
-                    type="button"> 로그인
-            </button>
+                    th:onclick="|location.href='@{/error}'|"
+                    type="button"> 수정으로 나중에 수정
+           </button>
             <form th:action="@{/logout}" method="post">
                 <button class="btn btn-lg btn-secondary"
                         onclick="location.href='items.html'"

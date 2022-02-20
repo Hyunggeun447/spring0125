@@ -1,10 +1,9 @@
-package com.store.chichi.Controller;
+package com.store.chichi.controller.item;
 
 import com.store.chichi.domain.item.Item;
 import com.store.chichi.domain.item.Shirt;
 import com.store.chichi.service.ItemService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +27,10 @@ public class ItemController {
         return "items/createForm";
     }
 
+    /**
+     * ModelAttribute 이름 주의할 것
+     * 나중에 세터 없에는 방법을 강구할 것
+     */
     @PostMapping("/items/new")
     public String createItem(@Validated @ModelAttribute("form") ItemCreateForm form, BindingResult bindingResult) {
 

@@ -1,4 +1,4 @@
-package com.store.chichi.Controller;
+package com.store.chichi.controller.item;
 
 import com.store.chichi.domain.item.Color;
 import com.store.chichi.domain.item.Size;
@@ -12,6 +12,13 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class ItemCreateForm {
+
+    /**
+     * NotEmpty ===> String
+     * etc... ====> NotNull
+     *
+     *  변수는 final
+     */
 
     @NotEmpty(message = "상품명은 필수입니다.") // String 타입에만 사용 가능/
     private String name;

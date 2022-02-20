@@ -1,4 +1,4 @@
-package com.store.chichi.Controller;
+package com.store.chichi.controller.member;
 
 
 import com.store.chichi.domain.Address;
