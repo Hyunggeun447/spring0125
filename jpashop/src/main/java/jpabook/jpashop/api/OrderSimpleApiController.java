@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.OrderSimpleQueryDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -94,6 +95,23 @@ public class OrderSimpleApiController {
                 .map(o -> new SimpleOrderDto(o))
                 .collect(Collectors.toList());
         return new ResultApi(collect.size(), collect);
+    }
+
+    /**
+     * Select 절이 줄어들어 성능이 향상된다.
+     * why? OrderRepository의 findOrderDtos로 jpql에서 new 명령어를 사용해서 바로 DTO로 값을 넣어서 가져왔기 때문.
+     *
+     * but v3보다 마냥 좋은가? NO
+     * 성능은 향상되었으나, 재사용성이 적다.
+     *
+     * 재사용성을 생각하면 V3. 성능만을 생각하면 V4
+     */
+
+    @GetMapping("/api/v4/simple-orders")
+    public ResultApi ordersV4() {
+        List<OrderSimpleQueryDto> orderDtos = orderRepository.findOrderDtos();
+        return new ResultApi(orderDtos.size(), orderDtos);
+
     }
 
     @Data
