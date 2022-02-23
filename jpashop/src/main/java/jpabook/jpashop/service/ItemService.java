@@ -24,6 +24,7 @@ public class ItemService {
     @Transactional
     public void updateItem(Long itemId, String name, int price, int stockQuantity, String author, String isbn) {
         Book item = (Book) itemRepository.findById(itemId);
+
         item.setName(name);
         item.setPrice(price);
         item.setStockQuantity(stockQuantity);
