@@ -14,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequiredArgsConstructor
 public class MemberApiController {
