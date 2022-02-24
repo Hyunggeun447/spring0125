@@ -2,6 +2,7 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.MemberRepositoryJpaData;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    //    private final MemberRepository memberRepository;
+    private final MemberRepositoryJpaData memberRepository;  //MemberRepository -> JPA DATA 인터페이스로 변경. 밑의 byId는 Optional이라 뒤에 .get() 붙여줌
 
     /*//    @Autowired
 //    @Autowired //생성자 하나면 자동으로 Autowired 해줌
@@ -47,7 +49,7 @@ public class MemberService {
 
     //회원 단일 id 조회
     public Member findById(Long id) {
-        return memberRepository.findById(id);
+        return memberRepository.findById(id).get();
     }
 
     //회원 전체 조회
@@ -57,7 +59,7 @@ public class MemberService {
 
     @Transactional
     public void update(Long id, String name) {
-        Member member = memberRepository.findById(id);
+        Member member = memberRepository.findById(id).get();
         member.setName(name);
     }
 }
