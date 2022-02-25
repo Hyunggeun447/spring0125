@@ -7,12 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +35,9 @@ class MemberJpaRepositoryTest {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void saveAndFind() throws Exception {
@@ -405,6 +411,60 @@ class MemberJpaRepositoryTest {
         assertThat(page.getTotalPages()).isEqualTo(2);          //총 페이지의 개수
         assertThat(page.isFirst()).isTrue();                    //페이지가 첫번째인가?
         assertThat(page.hasNext()).isTrue();                    //다음 페이지가 있는가?
+    }
+
+    /**
+     * 순수 JPA bulk update
+     */
+    @Test
+    public void bulkUpdate() throws Exception {
+
+        //given
+        memberJpaRepository.save(new Member("member1", 10, null));
+        memberJpaRepository.save(new Member("member2", 20, null));
+        memberJpaRepository.save(new Member("member3", 21, null));
+        memberJpaRepository.save(new Member("member4", 30, null));
+        memberJpaRepository.save(new Member("member5", 31, null));
+
+        //when
+
+        int resultCount = memberJpaRepository.bulkAge(20);
+
+        //then
+
+        assertThat(resultCount).isEqualTo(3);
+
+    }
+
+    /**
+     * Data Jpa bulk update
+     */
+    @Test
+    public void dataJpaBulkUpdate() throws Exception {
+
+        //given
+        memberRepository.save(new Member("member1", 10, null));
+        memberRepository.save(new Member("member2", 20, null));
+        memberRepository.save(new Member("member3", 21, null));
+        memberRepository.save(new Member("member4", 30, null));
+        memberRepository.save(new Member("member5", 31, null));
+
+        //when
+        int resultCount = memberRepository.bulkAgePlus(20);
+
+
+//        em.flush();
+//        em.clear();
+
+        List<Member> member5s = memberRepository.findByUserName("member5");
+        Member member5 = member5s.get(0);
+        System.out.println("member5 = " + member5);
+
+        //then
+
+        assertThat(resultCount).isEqualTo(3);
+
+
     }
 
 }

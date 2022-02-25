@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import study.datajpa.dto.MemberDto;
@@ -71,7 +72,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findMemberByUserName(String usrName); // 단건 반환
 
-    Optional<Member> findOptionalByUserName(String usrName); // 단건 Optional 반환
+    Optional<Member> findOptionalByUserName(String usrName); //단건 Optional 반환
 
 
     /**
@@ -83,6 +84,23 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value = "select m from Member m left join m.team t", countQuery = "select count(m) from Member m")
     Page<Member> findByAge(int age, Pageable pageable);
 //    Slice<Member> findByAge(int age, Pageable pageable);
+
+
+    /**
+     * DATA JPA bulk update
+     *
+     * 주의점 : bulk update를 할 경우 db의 데이터를 업데이트한다.
+     *        하지만 영속성 컨텍스트의 값은 변하지 있는다.
+     *        즉, 이 상태에서 조회한다면? -> 업데이트 미적용된 데이터가 결과로 나옴.
+     * 그래서 벌크 업데이트 이후에는 영속성 컨텍스를 처리해줘야 함
+     *  1) @Modifying(clearAutomatically = true)
+     *  2) 수동으로 엔티티매니져 (flush, clear)
+     */
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Member m set m.age = m.age + 1 where m.age>:age")
+    int bulkAgePlus(@Param("age") int age);
+
 
 
 }
