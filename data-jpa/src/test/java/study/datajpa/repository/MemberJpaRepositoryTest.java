@@ -205,5 +205,24 @@ class MemberJpaRepositoryTest {
 
     }
 
+    @Test
+    public void testQuery() throws Exception {
+        //given
+        Member member1 = new Member("userA", 20, null);
+        Member member2 = new Member("userA", 30, null);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        //when
+        List<Member> userAs = memberRepository.findUser("userA", 20);
+
+        //then
+        for (Member member : userAs) {
+            System.out.println("member = " + member);
+        }
+        assertThat(userAs.get(0)).isEqualTo(member1);
+
+    }
+
 
 }

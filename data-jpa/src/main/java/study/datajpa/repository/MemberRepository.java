@@ -21,4 +21,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
      */
 //    @Query(name = "Member.findByUserName") // 없어도 됌. nameQuery가 메소드 쿼리보다 우선순위가 높기때문.
     List<Member> findByUserName(@Param("userName") String userName);
+
+
+    /**
+     * Query, Repository 메소드에 쿼리 정의
+     * 메소드명 간략화의 장점
+     */
+    @Query("select m from Member m where m.userName = :userName and m.age = :age")
+    List<Member> findUser(@Param("userName") String userName, @Param("age") int age);
+
 }
