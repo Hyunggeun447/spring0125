@@ -3,6 +3,10 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDto;
@@ -317,6 +321,90 @@ class MemberJpaRepositoryTest {
 
         //then
 
+    }
+
+    @Test
+    public void paging() throws Exception {
+
+        //given
+        memberJpaRepository.save(new Member("member1", 10, null));
+        memberJpaRepository.save(new Member("member2", 10, null));
+        memberJpaRepository.save(new Member("member3", 10, null));
+        memberJpaRepository.save(new Member("member4", 10, null));
+        memberJpaRepository.save(new Member("member5", 10, null));
+
+        int age = 10;
+        int offset = 0;
+        int limit = 3;
+
+
+
+        //when
+        List<Member> members = memberJpaRepository.findByPage(age, offset, limit);
+        long totalCount = memberJpaRepository.totalCount(age);
+
+        //then
+        assertThat(members.size()).isEqualTo(limit);
+        assertThat(totalCount).isEqualTo(5);
+
+    }
+
+
+    /**
+     *
+     * DATA JPA 페이징, 정렬
+     * 반환타입 (Page, Slice, List)
+     *
+     * 1) Page = 결과 + count쿼
+     * Page 는 토탈카운트때문에 느림.
+     * -> @Query(value = "select m from Member m left join m.team t", countQuery = "select count(m) from Member m")
+     * 카운트 쿼리를 분리시켜서 성능을 향상시킬 수 있다.
+     *
+     * 2) 슬라이스 쓸때 = > 모바일에서 좋다.
+     * 슬라이스는 요청의 +1개를 가져와서 잘라서 처리해줌.
+     * 그렇기에 count 쿼리 없이 다음 페이지 유무를 확인 가능하다.
+     * 대신 토탈 카운팅 기능은 없다.
+     *
+     * 3)List는 추가 count 쿼리 없이 결과만 얻고싶을때.
+     *
+     */
+    @Test
+    public void dataJpaPaging() throws Exception {
+
+        //given
+        memberRepository.save(new Member("member1", 10, null));
+        memberRepository.save(new Member("member2", 10, null));
+        memberRepository.save(new Member("member3", 10, null));
+        memberRepository.save(new Member("member4", 10, null));
+        memberRepository.save(new Member("member5", 10, null));
+
+
+        int age = 10;
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "userName"));
+
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+//        Slice<Member> page = memberRepository.findByAge(age, pageRequest);
+
+//        Dto 로 변환하고 싶으면 map을 쓰면된다.
+        Page<MemberDto> toMap = page.map(member -> new MemberDto(member.getId(), member.getUserName(), null));
+
+        List<Member> content = page.getContent();
+        long totalElements = page.getTotalElements();
+
+
+        System.out.println("================================================== ");
+
+        for (Member member : content) {
+            System.out.println("member = " + member);
+        }
+//        System.out.println("totalElements = " + totalElements);
+
+        assertThat(content.size()).isEqualTo(3);                //1개 페이지의 크기
+        assertThat(page.getTotalElements()).isEqualTo(5);       //총 요소의 개수
+        assertThat(page.getNumber()).isEqualTo(0);              //현재 페이지 넘버
+        assertThat(page.getTotalPages()).isEqualTo(2);          //총 페이지의 개수
+        assertThat(page.isFirst()).isTrue();                    //페이지가 첫번째인가?
+        assertThat(page.hasNext()).isTrue();                    //다음 페이지가 있는가?
     }
 
 }
