@@ -122,5 +122,88 @@ class MemberJpaRepositoryTest {
 
     }
 
+    @Test
+    public void findByUserNameAndOldAge() throws Exception {
+
+        //given
+        Member member1 = new Member("userA", 20, null);
+        Member member2 = new Member("userA", 30, null);
+
+        memberJpaRepository.save(member1);
+        memberJpaRepository.save(member2);
+        //when
+
+        List<Member> findMembers = memberJpaRepository.findByUserNameAndOldAge("userA", 25);
+
+        //then
+
+        assertThat(findMembers.size()).isEqualTo(1);
+    }
+    @Test
+    public void findByUserNameAndOldAgeJPA() throws Exception {
+
+        //given
+        Member member1 = new Member("userA", 20, null);
+        Member member2 = new Member("userA", 30, null);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        //when
+
+        List<Member> findMembers = memberRepository.findByUserNameAndAgeGreaterThan("userA", 25);
+
+        //then
+        System.out.println("================== findMember ================ ");
+
+        for (Member findMember : findMembers) {
+            System.out.println("findMember = " + findMember);
+        }
+
+        assertThat(findMembers.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void namedQuery() throws Exception {
+
+        //given
+        Member member1 = new Member("userA", 20, null);
+        Member member2 = new Member("userA", 30, null);
+
+        memberJpaRepository.save(member1);
+        memberJpaRepository.save(member2);
+        //when
+
+        List<Member> result = memberJpaRepository.findByUserName("userA");
+
+
+        //then
+        Member member = result.get(0);
+        assertThat(member).isEqualTo(member1);
+
+    }
+    @Test
+    public void namedQueryJpa() throws Exception {
+
+        //given
+        Member member1 = new Member("userA", 20, null);
+        Member member2 = new Member("userA", 30, null);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        //when
+
+        List<Member> result = memberRepository.findByUserName("userA");
+
+        //then
+        System.out.println("================== findMember ================ ");
+        for (Member member : result) {
+            System.out.println("member = " + member);
+        }
+
+        Member member = result.get(0);
+        assertThat(member).isEqualTo(member1);
+
+    }
+
 
 }
