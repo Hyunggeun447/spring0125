@@ -548,6 +548,28 @@ class MemberJpaRepositoryTest {
 
     }
 
+    /**
+     * 확장기능
+     * 사용자 정의 repository 구현
+     * Query DSL 때 유용하게 사용할 수 있음.
+     */
+
+    @Test
+    public void callCustom() throws Exception {
+
+        //given
+        List<Member> memberCustom = memberRepository.findMemberCustom();
+
+        for (Member member : memberCustom) {
+            System.out.println("member = " + member);
+        }
+
+        //when
+
+        //then
+
+    }
+
 
 
 }
