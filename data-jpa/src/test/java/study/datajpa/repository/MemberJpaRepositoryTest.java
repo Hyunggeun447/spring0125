@@ -504,6 +504,50 @@ class MemberJpaRepositoryTest {
 
     }
 
+    /**
+     * Hint
+     */
+    @Test
+    public void queryHint() throws Exception {
+
+        //given
+        Member member1 = new Member("member1", 20, null);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+//        Member findMember = memberRepository.findById(member1.getId()).get();
+        Member findMember = memberRepository.findReadOnlyByUserName("member1");
+        findMember.setUserName("member2");
+
+        em.flush();
+        //then
+
+    }
+
+    /**
+     * Lock
+     */
+
+    @Test
+    public void lock() throws Exception {
+
+        //given
+        Member member1 = new Member("member1", 20, null);
+        memberRepository.save(member1);
+        em.flush();
+        em.clear();
+
+        //when
+
+        List<Member> findMember = memberRepository.findLockByUserName("member1");
+        //자동으로 for update 가 붙는다.
+
+        //then
+
+    }
+
 
 
 }
