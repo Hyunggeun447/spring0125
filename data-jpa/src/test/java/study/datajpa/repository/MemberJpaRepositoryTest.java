@@ -467,4 +467,43 @@ class MemberJpaRepositoryTest {
 
     }
 
+    /**
+     * Entity Graph
+     */
+
+    @Test
+    public void findMemberLazy() throws Exception {
+
+        //given
+
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 20, teamA);
+        Member member2 = new Member("member2", 20, teamB);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        //when
+        em.flush();
+        em.clear();
+
+        List<Member> all = memberRepository.findAll();
+//        List<Member> all = memberRepository.findMemberFetchJoin();
+
+        for (Member member : all) {
+            System.out.println("member = " + member.getUserName());
+            System.out.println("member = " + member.getTeam().getClass());
+            System.out.println("member = " + member.getTeam().getName());
+        }
+
+        //then
+
+    }
+
+
+
 }
