@@ -570,6 +570,38 @@ class MemberJpaRepositoryTest {
 
     }
 
+    /**
+     * Auditing
+     * MappedSuperClass를 이용한 공통객체(생성일, 수정일) 생성, 적용
+     */
+    @Test
+    public void jpaEventBaseEntity() throws Exception {
+
+        //given
+
+        Member member1 = new Member("member1", 20, null);
+        memberRepository.save(member1); // @PrePersist
+
+        Thread.sleep(100);
+
+        member1.setUserName("member2");
+        em.flush(); //@PreUpdate
+        em.clear();
+
+        //when
+
+        Member member = memberRepository.findById(member1.getId()).get();
+
+        //then
+        System.out.println("member create date = " + member.getCreateDate());
+//        System.out.println("member update date = " + member.getUpdateDate());
+        System.out.println("member update date = " + member.getLastModifiedDate());
+        System.out.println("member create by = " + member.getCreatedBy());
+        System.out.println("member update by = " + member.getLastModifiedBy());
+
+
+    }
+
 
 
 }
