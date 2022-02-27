@@ -15,6 +15,14 @@ spring:
         format_sql: true
         default_batch_fetch_size: 500
 
+# 페이징 글로벌 세팅
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 2000
+#        one-indexed-parameters: true #페이지를 1부터 시작하게 하는 설정. 한계 : pageable의 카운트 정보가 안맞음.
+
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace
