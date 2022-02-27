@@ -3,10 +3,7 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -599,6 +596,81 @@ class MemberJpaRepositoryTest {
         System.out.println("member create by = " + member.getCreatedBy());
         System.out.println("member update by = " + member.getLastModifiedBy());
 
+
+    }
+
+    /**
+     * Query By Example
+     *
+     * 단점 : join을 할때 해결이 잘 안됌.(inner만 가능)
+     * 즉, 비추천
+     */
+    @Test
+    public void queryByExample() throws Exception {
+
+        //given
+
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member member1 = new Member("member1", 20, teamA);
+        Member member2 = new Member("member2", 20, teamA);
+        em.persist(member1);
+        em.persist(member2);
+
+        em.flush();
+        em.clear();
+        
+        //when
+
+        Member member = new Member("member1");
+        Team team = new Team("teamA");
+        member.setTeam(team);
+
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("age");
+
+        Example<Member> example = Example.of(member, matcher);
+
+
+        //then
+
+        List<Member> result = memberRepository.findAll(example);
+
+        assertThat(result.get(0).getUserName()).isEqualTo("member1");
+
+    }
+
+    /**
+     * Projections
+     */
+    @Test
+    public void findProjectionsUserNameOnly() {
+
+        //given
+
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member member1 = new Member("member1", 20, teamA);
+        Member member2 = new Member("member2", 20, teamA);
+        em.persist(member1);
+        em.persist(member2);
+
+        em.flush();
+        em.clear();
+
+        //when
+
+//        List<UserNameOnly> result = memberRepository.findProjectionsByUserName("member1");
+        List<UserNameOnlyDto> result = memberRepository.findProjectionsByUserName("member1");
+
+
+        //then
+        for (UserNameOnlyDto userNameOnly : result) {
+            System.out.println("userNameOnly = " + userNameOnly.getUserName());
+        }
 
     }
 
