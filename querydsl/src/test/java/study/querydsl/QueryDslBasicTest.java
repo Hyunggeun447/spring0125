@@ -1,6 +1,7 @@
 package study.querydsl;
 
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,10 +39,10 @@ public class QueryDslBasicTest {
         em.persist(teamA);
         em.persist(teamB);
 
-        Member member1 = new Member("member1", 20, teamA);
+        Member member1 = new Member("member1", 10, teamA);
         Member member2 = new Member("member2", 20, teamA);
-        Member member3 = new Member("member3", 20, teamB);
-        Member member4 = new Member("member4", 20, teamB);
+        Member member3 = new Member("member3", 30, teamB);
+        Member member4 = new Member("member4", 40, teamB);
 
         em.persist(member1);
         em.persist(member2);
@@ -82,6 +83,61 @@ public class QueryDslBasicTest {
         //then
 
         assertThat(findMember.getUsername()).isEqualTo("member1");
+
+    }
+
+    @Test
+    public void search() throws Exception {
+
+        //given
+        Member findMember = queryFactory
+                .selectFrom(member)
+                .where(member.username.eq("member1")
+                        .and(member.age.eq(10)))
+                .fetchOne();
+
+        //when
+
+        //then
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+//        assertThat(findMember.getAge()).isEqualTo(10);
+    }
+
+    @Test
+    public void resultFetchTest() throws Exception {
+
+        //list 조회
+        List<Member> fetch = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        //단건조회
+        Member fetchOne = queryFactory.selectFrom(member).fetchOne();
+
+        // 1개 단건조회
+        Member fetchFirst = queryFactory.selectFrom(member).fetchFirst(); // .limit(1).fetchOne()
+
+
+        /**
+         * fetchResults 는 deprecated되었다.
+         * 원래 동작은 페이징 처리 + total count 쿼리 추가실행을 해주었으나,
+         * 복잡한 쿼리에서는 동작이 잘 되지않아 deprecated 되었다고 함.
+         *
+         * fetchCount 역시 마찬가지
+         * count쿼리로 변경해서 count 수를 조회했으나,
+         * 역시 deprecated되었다
+         */
+//        QueryResults<Member> results = queryFactory.selectFrom(member).fetchResults();
+//        long l = queryFactory.selectFrom(member).fetchCount();
+
+        // count 쿼리를 새로 사용하는 방법
+        Long totalCount = queryFactory
+                //.select(Wildcard.count) //select count(*)
+                .select(member.count()) //select count(member.id)
+                .from(member)
+                .fetchOne();
+        System.out.println("totalCount = " + totalCount);
+
 
     }
 }
