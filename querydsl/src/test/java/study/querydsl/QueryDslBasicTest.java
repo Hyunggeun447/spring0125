@@ -3,6 +3,8 @@ package study.querydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -407,6 +409,140 @@ public class QueryDslBasicTest {
         assertThat(loaded).as("페치 조인 적용").isTrue();
 
     }
+
+    /**
+     * 서브 쿼리
+     *
+     * 1. 나이가 가장 많은 회원
+     * 2. 나이가 평균인 회원
+     * 3-1. IN 사용하는 방법(where)
+     * 3-2. IN 사용하는 방법(select)
+     *
+     * 한계 : from절에는 서브쿼리 못씀.
+     * 해결 : 1) 서브쿼리를 join 으로 변경
+     *       2) 애플리케이션에서 쿼리를 2번 분리해서 실행
+     *       3) nativeSQL 사용 (최후의 방법)
+     */
+    @Test
+    public void subQuery() throws Exception {
+        //서브쿼리는 메인쿼리랑 쿼리명이 달라야해서 하나 더 만들어줌
+        QMember memberSub = new QMember("memberSub");
+        //given
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.eq(
+                        JPAExpressions
+                                .select(memberSub.age.max())
+                                .from(memberSub)
+                )).fetch();
+
+        //when
+        assertThat(result).extracting("age").containsExactly(40);
+
+        //then
+
+    }
+
+    @Test
+    public void subQuery2() throws Exception {
+
+        QMember memberSub = new QMember("memberSub");
+        //given
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.goe(
+                        JPAExpressions
+                                .select(memberSub.age.avg())
+                                .from(memberSub)
+                )).fetch();
+
+        //when
+        assertThat(result).extracting("age").containsExactly(30, 40);
+
+        //then
+
+    }
+
+    @Test
+    public void subQuery3() throws Exception {
+
+        QMember memberSub = new QMember("memberSub");
+        //given
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.in(
+                        JPAExpressions
+                                .select(memberSub.age)
+                                .from(memberSub)
+                                .where(memberSub.age.gt(10))
+                )).fetch();
+
+        //when
+        assertThat(result).extracting("age").containsExactly(20, 30, 40);
+
+        //then
+
+    }
+
+    @Test
+    public void selectSubQuery() throws Exception {
+        QMember memberSub = new QMember("memberSub");
+
+
+        List<Tuple> result = queryFactory
+                .select(member.username,
+                        JPAExpressions
+                                .select(memberSub.age.avg())
+                                .from(memberSub))
+                .from(member)
+                .fetch();
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+
+        }
+
+    }
+
+    /**
+     * Case 문
+     */
+    @Test
+    public void basicCase() throws Exception {
+        List<String> result = queryFactory
+                .select(member.age
+                        .when(10).then("열살")
+                        .when(20).then("스무살").otherwise("기타"))
+                .from(member)
+                .fetch();
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+
+    }
+
+    @Test
+    public void complexCase() throws Exception {
+        List<String> result = queryFactory
+                .select(new CaseBuilder()
+                        .when(member.age.between(0, 20)).then("0~20살")
+                        .when(member.age.between(21, 30)).then("21~30살")
+                        .otherwise("기타"))
+                .from(member)
+                .fetch();
+
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+
+        //given
+
+        //when
+
+        //then
+
+    }
+
+
 
 
 }
