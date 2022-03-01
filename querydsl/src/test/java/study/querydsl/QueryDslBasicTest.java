@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static study.querydsl.entity.QMember.*;
 
 @SpringBootTest
 @Transactional
@@ -67,11 +68,13 @@ public class QueryDslBasicTest {
     public void startQueryDsl() throws Exception {
 
         //given
-        QMember m = new QMember("m");
+//        QMember m = new QMember("m");
+//        QMember m = QMember.member;  //이렇게도 활용 가능
+        // static import 로도 코드 간결화 가능
 
-        Member findMember = queryFactory.select(m)
-                .from(m)
-                .where(m.username.eq("member1"))
+        Member findMember = queryFactory.select(member)
+                .from(member)
+                .where(member.username.eq("member1"))
                 .fetchOne();
 
         //when
