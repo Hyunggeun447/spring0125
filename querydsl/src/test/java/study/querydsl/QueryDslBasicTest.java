@@ -4,8 +4,10 @@ package study.querydsl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.EqualsAndHashCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +28,7 @@ import static org.assertj.core.api.Assertions.*;
 import static study.querydsl.entity.QMember.*;
 import static study.querydsl.entity.QTeam.team;
 
+@EqualsAndHashCode
 @SpringBootTest
 @Transactional
 public class QueryDslBasicTest {
@@ -520,6 +523,7 @@ public class QueryDslBasicTest {
 
     }
 
+
     @Test
     public void complexCase() throws Exception {
         List<String> result = queryFactory
@@ -534,8 +538,47 @@ public class QueryDslBasicTest {
             System.out.println("s = " + s);
         }
 
-        //given
 
+    }
+
+    /**
+     * 상수(constant)
+     */
+
+    @Test
+    public void constant() throws Exception {
+
+        //given
+        List<Tuple> result = queryFactory
+                .select(member.username, Expressions.constant("A"))
+                .from(member)
+                .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+        }
+
+    }
+
+    /**
+     * 문자 더하기
+     *
+     * stringValue -> 문자가 아닌 값들을 String 으로 변환해준다.
+     */
+    @Test
+    public void concat() throws Exception {
+
+        // {username}-----{age}
+        //given
+        List<String> member1 = queryFactory
+                .select(member.username.concat("-----").concat(member.age.stringValue()))
+                .from(member)
+                .where(member.username.eq("member1"))
+                .fetch();
+
+        for (String s : member1) {
+            System.out.println("s = " + s);
+        }
         //when
 
         //then
