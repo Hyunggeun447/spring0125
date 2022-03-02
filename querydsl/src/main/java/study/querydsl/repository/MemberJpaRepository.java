@@ -101,7 +101,7 @@ public class MemberJpaRepository {
     }
 
     /**
-     * 동적 쿼리와 성능 최적화 조회 - builder 편
+     * 동적 쿼리와 성능 최적화 조회 - where 편
      */
     public List<MemberTeamDto> search(MemberSearchCondition condition) {
         return queryFactory
