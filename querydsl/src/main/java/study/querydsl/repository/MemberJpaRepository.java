@@ -1,18 +1,14 @@
 package study.querydsl.repository;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import study.querydsl.dto.MemberSearchCondition;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.dto.QMemberTeamDto;
 import study.querydsl.entity.Member;
-import study.querydsl.entity.QMember;
-import study.querydsl.entity.QTeam;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -103,7 +99,7 @@ public class MemberJpaRepository {
     /**
      * 동적 쿼리와 성능 최적화 조회 - where 편
      */
-    public List<MemberTeamDto> search(MemberSearchCondition condition) {
+    public List<MemberTeamDto> searchWhere(MemberSearchCondition condition) {
         return queryFactory
                 .select(new QMemberTeamDto(
                         member.id.as("memberId"),

@@ -17,6 +17,6 @@ public class MemberController {
 
     @GetMapping("/v1/members")
     public List<MemberTeamDto> searchMemberV1(MemberSearchCondition condition) {
-        return memberJpaRepository.search(condition);
+        return memberJpaRepository.searchWhere(condition);
     }
 }
