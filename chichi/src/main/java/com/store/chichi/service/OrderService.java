@@ -2,6 +2,7 @@ package com.store.chichi.service;
 
 import com.store.chichi.domain.*;
 import com.store.chichi.domain.item.Item;
+import com.store.chichi.repository.OrderSearch;
 import com.store.chichi.repository.itemRepository.ItemRepository;
 import com.store.chichi.repository.memberRepository.MemberRepository;
 import com.store.chichi.repository.orderRepository.OrderRepository;
@@ -9,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class OrderService {
 
@@ -20,7 +23,6 @@ public class OrderService {
 
     private final ItemRepository itemRepository;
 
-    @Transactional
     public Long order(Long memberId, Long itemId, int count, Address address) {
         Member member = memberRepository.findById(memberId).get();
         Item item = itemRepository.findById(itemId).get();
@@ -35,6 +37,11 @@ public class OrderService {
 
         orderRepository.save(order);
         return order.getId();
+
+    }
+
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findByLoginNameAndOrderStatus(orderSearch);
 
     }
 

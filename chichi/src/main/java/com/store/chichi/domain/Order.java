@@ -31,6 +31,9 @@ public class Order {
 
     //연관관계 메서드 order - member
     public void addMember(Member member) {
+        if (this.member != null) {
+            member.getOrders().remove(this);
+        }
         this.member = member;
         member.getOrders().add(this);
     }

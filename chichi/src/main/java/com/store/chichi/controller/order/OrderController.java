@@ -2,7 +2,10 @@ package com.store.chichi.controller.order;
 
 import com.store.chichi.domain.Address;
 import com.store.chichi.domain.Member;
+import com.store.chichi.domain.Order;
+import com.store.chichi.domain.OrderSearchDto;
 import com.store.chichi.domain.item.Item;
+import com.store.chichi.repository.OrderSearch;
 import com.store.chichi.service.ItemService;
 import com.store.chichi.service.MemberService;
 import com.store.chichi.service.OrderService;
@@ -10,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,8 +45,14 @@ public class OrderController {
                         @RequestParam("address2") String address2) {
         Address address = new Address(address1, address2);
         orderService.order(memberId, itemId, count, address);
-        return "redirect:/orders";
-
-
+        return "redirect:/";
     }
+
+    @GetMapping("/orders")
+    public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+        List<Order> orders = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orders);
+        return "order/orderList";
+    }
+
 }
