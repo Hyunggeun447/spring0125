@@ -2,7 +2,7 @@ package com.store.chichi.controller.login;
 
 
 import com.store.chichi.domain.Member;
-import com.store.chichi.service.LoginService;
+import com.store.chichi.service.loginService.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -46,7 +46,7 @@ public class LoginController {
             return "login/loginForm";
         }
 
-        Member loginMember = loginService.login(form.getNickName(), form.getPassword());
+        Member loginMember = loginService.login(form.getLoginName(), form.getPassword());
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디, 비밀번호 오류");

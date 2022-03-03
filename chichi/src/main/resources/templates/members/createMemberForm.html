@@ -12,10 +12,10 @@
     <form role="form" action="/members/new" th:object="${memberCreateForm}" method="post">
 
         <div class="form-group">
-            <label th:for="nickname">ID</label>
-            <input type="text" th:field="*{nickname}" class="form-control" placeholder="ID를 입력하세요"
-                   th:class="${#fields.hasErrors('nickname')}? 'form-control fieldError' : 'form-control'">
-            <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Incorrect date</p>
+            <label th:for="loginName">ID</label>
+            <input type="text" th:field="*{loginName}" class="form-control" placeholder="ID를 입력하세요"
+                   th:class="${#fields.hasErrors('loginName')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('loginName')}" th:errors="*{loginName}">Incorrect date</p>
         </div>
         <div class="form-group">
             <label th:for="password">비밀번호</label>

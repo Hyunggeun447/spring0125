@@ -22,7 +22,7 @@ public class Member {
 
     private String name; //이름
 
-    private String nickname; //닉네임Id
+    private String loginName; //닉네임Id
 
     private String password; //비밀번호
 
@@ -39,10 +39,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberGrade memberGrade; //    ADMIN, NORMAL
 
-    public Member(String name, String nickname, String password,
+    public Member(String name, String loginName, String password,
                   String eMail, String phoneNumber) {
         this.name = name;
-        this.nickname = nickname;
+        this.loginName = loginName;
         this.password = password;
         this.eMail = eMail;
         this.phoneNumber = phoneNumber;

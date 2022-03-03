@@ -2,6 +2,7 @@ package com.store.chichi.repository;
 
 import com.store.chichi.domain.item.Item;
 import com.store.chichi.domain.item.Shirt;
+import com.store.chichi.repository.itemRepository.ItemRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,10 +16,8 @@ import javax.persistence.EntityManager;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
-
 class ItemRepositoryTest {
 
     @Autowired
@@ -37,11 +36,11 @@ class ItemRepositoryTest {
         itemRepository.save(item);
 
         //when
-        itemRepository.deleteItemById(item.getId());
+        itemRepository.deleteById(item.getId());
 
 
         //then
-        Item byId = itemRepository.findById(item.getId());
+        Item byId = itemRepository.findById(item.getId()).get();
 
         assertThat(byId).isNull();
 

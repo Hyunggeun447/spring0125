@@ -1,7 +1,7 @@
 package com.store.chichi.service;
 
 import com.store.chichi.domain.Member;
-import com.store.chichi.repository.MemberRepository;
+import com.store.chichi.repository.memberRepository.MemberRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
 class MemberServiceTest {

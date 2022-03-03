@@ -41,11 +41,12 @@ public class MemberController {
 
         if (!form.getPassword().equals(form.getPassword2())) {
 //            throw new IllegalStateException();
+            bindingResult.reject("different password","비밀번호 오류");
 
             return "members/createMemberForm";
         }
 
-        Member member = new Member(form.getName(),form.getNickname(),form.getPassword(),form.getEMail(),form.getPhoneNumber());
+        Member member = new Member(form.getName(),form.getLoginName(),form.getPassword(),form.getEMail(),form.getPhoneNumber());
         Address address = new Address(form.getAddress1(),form.getAddress2());
         member.setAddress(address);
         member.setMemberGrade(MemberGrade.NORMAL);

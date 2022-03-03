@@ -2,9 +2,9 @@ package com.store.chichi.service;
 
 import com.store.chichi.domain.*;
 import com.store.chichi.domain.item.Item;
-import com.store.chichi.repository.ItemRepository;
-import com.store.chichi.repository.MemberRepository;
-import com.store.chichi.repository.OrderRepository;
+import com.store.chichi.repository.itemRepository.ItemRepository;
+import com.store.chichi.repository.memberRepository.MemberRepository;
+import com.store.chichi.repository.orderRepository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +22,8 @@ public class OrderService {
 
     @Transactional
     public Long order(Long memberId, Long itemId, int count, Address address) {
-        Member member = memberRepository.findById(memberId);
-        Item item = itemRepository.findById(itemId);
+        Member member = memberRepository.findById(memberId).get();
+        Item item = itemRepository.findById(itemId).get();
 
         Delivery delivery = new Delivery();
         delivery.setAddress(address);

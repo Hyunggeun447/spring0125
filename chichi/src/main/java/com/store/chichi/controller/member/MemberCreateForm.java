@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 public class MemberCreateForm {
 
     @NotEmpty(message = "아이디는 필수입니다.")
-    private String nickname;
+    private String loginName;
 
     @NotEmpty(message = "이름은 필수입니다.")
     private String name;
