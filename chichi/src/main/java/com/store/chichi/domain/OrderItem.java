@@ -1,5 +1,6 @@
 package com.store.chichi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.chichi.domain.item.Item;
 import com.store.chichi.domain.order.Order;
 import lombok.AccessLevel;
@@ -27,6 +28,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
