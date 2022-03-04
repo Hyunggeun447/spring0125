@@ -1,5 +1,6 @@
 package com.store.chichi.domain;
 
+import com.store.chichi.domain.order.Order;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

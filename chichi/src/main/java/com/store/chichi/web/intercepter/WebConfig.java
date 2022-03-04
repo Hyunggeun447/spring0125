@@ -1,4 +1,4 @@
-package com.store.chichi.service.loginService;
+package com.store.chichi.web.intercepter;
 
 import com.store.chichi.web.intercepter.LogInterceptor;
 import com.store.chichi.web.intercepter.LoginCheckInterceptor;
@@ -19,9 +19,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "error");
 
-        registry.addInterceptor(new LoginCheckInterceptor())
+        /*registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/css/**", "/*.ico", "error","/login","/logout","/members/new");
+                .excludePathPatterns("/", "/css/**", "/*.ico", "error","/login","/logout","/members/new");*/
     }
 }

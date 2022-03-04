@@ -1,6 +1,7 @@
-package com.store.chichi.domain;
+package com.store.chichi.domain.order;
 
 import com.querydsl.core.annotations.QueryProjection;
+import com.store.chichi.domain.order.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,8 @@ public class OrderSearchDto {
     private int count;
     private OrderStatus status;
     private LocalDateTime orderDate;
+
+
 
     @QueryProjection
     public OrderSearchDto(Long id, String loginName, String itemName, int orderPrice, int count, OrderStatus status, LocalDateTime orderDate) {

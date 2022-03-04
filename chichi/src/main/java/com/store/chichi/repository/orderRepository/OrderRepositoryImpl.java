@@ -2,15 +2,16 @@ package com.store.chichi.repository.orderRepository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.store.chichi.domain.*;
-import com.store.chichi.repository.OrderSearch;
+import com.store.chichi.domain.order.*;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.store.chichi.domain.QMember.*;
-import static com.store.chichi.domain.QOrder.*;
+import static com.store.chichi.domain.QOrderItem.*;
+import static com.store.chichi.domain.item.QItem.*;
+import static com.store.chichi.domain.order.QOrder.*;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
@@ -28,12 +29,32 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .from(order)
                 .join(order.member,member)
                 .where(loginNameEq(condition.getLoginName()),
-                        orderStatusSafe(condition.getOrderStatus()))
+                        orderStatusEq(condition.getOrderStatus()))
                 .limit(1000)
                 .fetch();
     }
 
-    private BooleanExpression orderStatusSafe(OrderStatus orderStatus) {
+    @Override
+    public List<OrderSearchDto> findByLoginNameAndOrderStatusDto(OrderSearch condition) {
+        return queryFactory
+                .select(new QOrderSearchDto(
+                        order.id,
+                        member.loginName,
+                        orderItem.item.itemName,
+                        orderItem.orderPrice,
+                        orderItem.count,
+                        order.status,
+                        order.orderDate))
+                .from(order)
+                .join(order.member, member)
+                .join(order.orderItems, orderItem)
+                .where(loginNameEq(condition.getLoginName()),
+                        orderStatusEq(condition.getOrderStatus()))
+                .fetch();
+    }
+
+
+    private BooleanExpression orderStatusEq(OrderStatus orderStatus) {
         if (orderStatus != null) {
             return order.status.eq(orderStatus);
         } else {

@@ -2,7 +2,9 @@ package com.store.chichi.service;
 
 import com.store.chichi.domain.*;
 import com.store.chichi.domain.item.Item;
-import com.store.chichi.repository.OrderSearch;
+import com.store.chichi.domain.order.Order;
+import com.store.chichi.domain.order.OrderSearch;
+import com.store.chichi.domain.order.OrderSearchDto;
 import com.store.chichi.repository.itemRepository.ItemRepository;
 import com.store.chichi.repository.memberRepository.MemberRepository;
 import com.store.chichi.repository.orderRepository.OrderRepository;
@@ -42,6 +44,11 @@ public class OrderService {
 
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findByLoginNameAndOrderStatus(orderSearch);
+
+    }
+
+    public List<OrderSearchDto> findOrdersDto(OrderSearch orderSearch) {
+        return orderRepository.findByLoginNameAndOrderStatusDto(orderSearch);
 
     }
 

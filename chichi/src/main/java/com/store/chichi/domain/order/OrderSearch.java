@@ -1,6 +1,5 @@
-package com.store.chichi.repository;
+package com.store.chichi.domain.order;
 
-import com.store.chichi.domain.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 

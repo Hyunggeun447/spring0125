@@ -5,7 +5,10 @@ import com.store.chichi.domain.item.Color;
 import com.store.chichi.domain.item.Item;
 import com.store.chichi.domain.item.Shirt;
 import com.store.chichi.domain.item.Size;
-import com.store.chichi.repository.OrderSearch;
+import com.store.chichi.domain.order.Order;
+import com.store.chichi.domain.order.OrderSearch;
+import com.store.chichi.domain.order.OrderSearchDto;
+import com.store.chichi.domain.order.OrderStatus;
 import com.store.chichi.service.ItemService;
 import com.store.chichi.service.MemberService;
 import com.store.chichi.service.OrderService;
@@ -16,12 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.store.chichi.domain.QMember.member;
+import static com.store.chichi.domain.QOrderItem.orderItem;
+import static com.store.chichi.domain.item.QItem.item;
+import static com.store.chichi.domain.order.QOrder.order;
+
 @SpringBootTest
 @Transactional
 class OrderRepositoryImplTest {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
     MemberService memberService;
@@ -51,16 +62,25 @@ class OrderRepositoryImplTest {
         orderSearch.setOrderStatus(OrderStatus.ORDER);
 
         List<Order> result = orderService.findOrders(orderSearch);
+        List<OrderSearchDto> resultDto = orderRepository.findByLoginNameAndOrderStatusDto(orderSearch);
 
         System.out.println("result = " + result);
         System.out.println("result = " + result.get(0));
         System.out.println("result = " + result.get(0).getId());
-        System.out.println("result = " + result.get(0).getMember());
+        System.out.println("result = " + result.get(0).getMember().getLoginName());
         System.out.println("result = " + result.get(0).getStatus());
         System.out.println("result = " + result.get(0).getOrderItems());
         System.out.println("result = " + result.get(0).getOrderDate());
-        System.out.println("result = " + result.get(0).getDelivery());
-        System.out.println("result = " + result.get(0).getTotalPrice());
+
+        System.out.println("resultDto = " + resultDto);
+        System.out.println("resultDto = " + resultDto.get(0));
+        System.out.println("resultDto = " + resultDto.get(0).getId());
+        System.out.println("resultDto = " + resultDto.get(0).getLoginName());
+        System.out.println("resultDto = " + resultDto.get(0).getStatus());
+        System.out.println("resultDto = " + resultDto.get(0).getItemName());
+        System.out.println("resultDto = " + resultDto.get(0).getOrderDate());
+
+
         //given
 
         //when

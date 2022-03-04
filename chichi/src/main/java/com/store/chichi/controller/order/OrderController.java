@@ -2,10 +2,10 @@ package com.store.chichi.controller.order;
 
 import com.store.chichi.domain.Address;
 import com.store.chichi.domain.Member;
-import com.store.chichi.domain.Order;
-import com.store.chichi.domain.OrderSearchDto;
+import com.store.chichi.domain.order.Order;
 import com.store.chichi.domain.item.Item;
-import com.store.chichi.repository.OrderSearch;
+import com.store.chichi.domain.order.OrderSearch;
+import com.store.chichi.domain.order.OrderSearchDto;
 import com.store.chichi.service.ItemService;
 import com.store.chichi.service.MemberService;
 import com.store.chichi.service.OrderService;
@@ -54,5 +54,6 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "order/orderList";
     }
+
 
 }
