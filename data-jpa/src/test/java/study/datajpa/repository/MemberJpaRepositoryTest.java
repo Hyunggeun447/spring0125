@@ -385,7 +385,7 @@ class MemberJpaRepositoryTest {
         int age = 10;
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "userName"));
 
-        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+        Page<Member> page = memberRepository.findByAgeV2(age, pageRequest);
 //        Slice<Member> page = memberRepository.findByAge(age, pageRequest);
 
 //        Dto 로 변환하고 싶으면 map을 쓰면된다.
@@ -400,7 +400,24 @@ class MemberJpaRepositoryTest {
         for (Member member : content) {
             System.out.println("member = " + member);
         }
-//        System.out.println("totalElements = " + totalElements);
+        System.out.println("totalElements = " + totalElements);
+
+
+        int totalPages = page.getTotalPages();
+        System.out.println("totalPages = " + totalPages);
+        int number = page.getNumber();
+        System.out.println("number = " + number);
+        int numberOfElements = page.getNumberOfElements();
+        System.out.println("numberOfElements = " + numberOfElements);
+        int size = page.getSize();
+        System.out.println("size = " + size);
+        Sort sort = page.getSort();
+        System.out.println("sort = " + sort);
+        Class<? extends Page> aClass = page.getClass();
+        System.out.println("aClass = " + aClass);
+        Pageable pageable = page.getPageable();
+        System.out.println("pageable = " + pageable);
+
 
         assertThat(content.size()).isEqualTo(3);                //1개 페이지의 크기
         assertThat(page.getTotalElements()).isEqualTo(5);       //총 요소의 개수
@@ -673,6 +690,7 @@ class MemberJpaRepositoryTest {
         }
 
     }
+
 
 
 

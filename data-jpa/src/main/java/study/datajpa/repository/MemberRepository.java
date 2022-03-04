@@ -85,6 +85,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     Page<Member> findByAge(int age, Pageable pageable);
 //    Slice<Member> findByAge(int age, Pageable pageable);
 
+    @Query(value = "select m from Member m", countQuery = "select count(m) from Member m")
+    Page<Member> findByAgeV2(int age, Pageable pageable);
+
 
     /**
      * DATA JPA bulk update
@@ -144,4 +147,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
      */
 //    List<UserNameOnly> findProjectionsByUserName(@Param("userName") String userName);
     List<UserNameOnlyDto> findProjectionsByUserName(@Param("userName") String userName);
+
+
+
+
 }
