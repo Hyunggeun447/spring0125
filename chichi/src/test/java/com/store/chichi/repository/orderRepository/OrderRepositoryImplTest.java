@@ -12,6 +12,7 @@ import com.store.chichi.domain.order.OrderStatus;
 import com.store.chichi.service.ItemService;
 import com.store.chichi.service.MemberService;
 import com.store.chichi.service.OrderService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ import static com.store.chichi.domain.QMember.member;
 import static com.store.chichi.domain.QOrderItem.orderItem;
 import static com.store.chichi.domain.item.QItem.item;
 import static com.store.chichi.domain.order.QOrder.order;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -86,6 +88,26 @@ class OrderRepositoryImplTest {
         //when
 
         //then
+
+    }
+
+    @Test
+    public void findMemberByLoginName() throws Exception {
+
+        //given
+        Member member1 = new Member("kim1", "abc1", "1111", "eewr", "1234");
+        Member member2 = new Member("kim2", "abc2", "1111", "eewr", "1234");
+
+        Long join1 = memberService.join(member1);
+        Long join2 = memberService.join(member2);
+        //when
+
+        Member abc1 = memberService.findByLoginName("abc1");
+
+
+        //then
+
+        assertThat(abc1).isEqualTo(member1);
 
     }
 

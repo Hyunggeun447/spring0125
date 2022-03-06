@@ -24,8 +24,10 @@ public class Member {
 
     private String name; //이름
 
+    @Column(nullable = false)
     private String loginName; //닉네임Id
 
+    @Column(nullable = false)
     private String password; //비밀번호
 
     private String eMail;

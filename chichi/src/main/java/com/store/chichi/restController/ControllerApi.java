@@ -5,6 +5,7 @@ import com.store.chichi.domain.order.OrderSearch;
 import com.store.chichi.domain.order.OrderSearchDto;
 import com.store.chichi.domain.order.OrderStatus;
 import com.store.chichi.repository.memberRepository.MemberRepository;
+import com.store.chichi.service.MemberService;
 import com.store.chichi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,8 @@ public class ControllerApi {
 
     private final OrderService orderService;
 
-    private final MemberRepository memberRepository;
+    //    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
 
 //    @GetMapping("/orders/list/api")
@@ -35,7 +37,8 @@ public class ControllerApi {
 
     @GetMapping("/members/{loginName}")
     public Member findMember(@PathVariable("loginName") String loginName) {
-        Member member = memberRepository.findByLoginName(loginName).get(0);
-        return member;
+//        Member member = memberRepository.findByLoginName(loginName).get(0);
+//        Member member = memberRepository.findMemberByLoginName(loginName);
+        return memberService.findByLoginName(loginName);
     }
 }
