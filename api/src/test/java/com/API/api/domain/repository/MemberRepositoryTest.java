@@ -90,4 +90,18 @@ class MemberRepositoryTest {
         assertThat(resultList).containsExactly(memberRepository.findMemberByLoginName("loginName1"));
     }
 
+    @Test
+    public void findByMemberTypeAndTeamType() throws Exception {
+
+        //given
+
+        //when
+        List<Member> resultList = memberRepository.findByMemberTypeAndMemberType(MemberType.JUNIOR, TeamType.DEVELOPER);
+
+        //then
+        assertThat(resultList.size()).isEqualTo(5);
+        assertThat(resultList).contains(memberRepository.findMemberByLoginName("loginName8"));
+
+    }
+
 }
