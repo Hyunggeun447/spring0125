@@ -25,6 +25,9 @@ class MemberServiceTest {
     @Autowired
     TeamRepository teamRepository;
 
+    @Autowired
+    TeamService teamService;
+
     @Test
     public void saveAndValidate() throws Exception {
 
@@ -72,8 +75,6 @@ class MemberServiceTest {
     public void findByTeamName() throws Exception {
 
         //given
-
-        //given
         Member member = new Member("loginName", "memberName", "password1!", "e@mail.com");
 
         Long memberId = memberService.save(member);
@@ -93,6 +94,27 @@ class MemberServiceTest {
 
         assertThat(resultList.size()).isEqualTo(1);
         assertThat(resultList).contains(member);
+
+
+    }
+
+    @Test
+    public void editTest() throws Exception {
+
+        //given
+        Member member = new Member("loginName", "memberName", "password1!", "e@mail.com");
+
+        Long memberId = memberService.save(member);
+        Team team = new Team("teamName", TeamType.OTHERS);
+        teamRepository.save(team);
+
+        member.addTeam(team);
+
+        //when
+        Team sameTeamName = new Team("teamName", TeamType.DEVELOPER);
+
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> teamService.save(sameTeamName));
+
 
 
     }

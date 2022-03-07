@@ -20,6 +20,7 @@ public class Team {
     private Long id;
 
     @NotBlank
+    @Column(unique = true)
     private String teamName;
 
     @OneToMany(mappedBy = "team")

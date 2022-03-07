@@ -174,4 +174,16 @@ class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void teamfindByTeamName() throws Exception {
+
+        //when
+        Team result = teamRepository.findTeamByTeamName("teamName2");
+        System.out.println("result = " + result.getTeamName());
+
+        //then
+        assertThat(result.getTeamType()).isEqualTo(TeamType.DEVELOPER);
+
+    }
+
 }
