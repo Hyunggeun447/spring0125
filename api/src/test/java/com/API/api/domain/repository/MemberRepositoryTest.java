@@ -1,21 +1,19 @@
 package com.API.api.domain.repository;
 
+import com.API.api.domain.dto.MemberAndTeamTypeDto;
 import com.API.api.domain.entity.Member;
 import com.API.api.domain.entity.MemberType;
 import com.API.api.domain.entity.Team;
 import com.API.api.domain.entity.TeamType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -96,11 +94,25 @@ class MemberRepositoryTest {
         //given
 
         //when
-        List<Member> resultList = memberRepository.findByMemberTypeAndMemberType(MemberType.JUNIOR, TeamType.DEVELOPER);
+        List<Member> resultList = memberRepository.findByMemberTypeAndTeamType(MemberType.JUNIOR, TeamType.DEVELOPER);
 
         //then
         assertThat(resultList.size()).isEqualTo(5);
         assertThat(resultList).contains(memberRepository.findMemberByLoginName("loginName8"));
+
+    }
+
+    @Test
+    public void findByMemberTypeAndTeamTypeDTO() throws Exception {
+
+        //when
+
+        List<MemberAndTeamTypeDto> result = memberRepository.findByMemberTypeAndTeamTypeDto(MemberType.JUNIOR, TeamType.DEVELOPER);
+
+        //then
+        for (MemberAndTeamTypeDto memberAndTeamTypeDto : result) {
+            System.out.println("memberAndTeamTypeDto = " + memberAndTeamTypeDto);
+        }
 
     }
 
