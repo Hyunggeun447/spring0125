@@ -1,6 +1,8 @@
 package com.API.api.domain.service;
 
+import com.API.api.domain.dto.MemberAndTeamTypeDto;
 import com.API.api.domain.entity.Member;
+import com.API.api.domain.entity.MemberType;
 import com.API.api.domain.entity.Team;
 import com.API.api.domain.entity.TeamType;
 import com.API.api.domain.repository.TeamRepository;
@@ -116,6 +118,32 @@ class MemberServiceTest {
         org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> teamService.save(sameTeamName));
 
 
+
+    }
+
+    @Test
+    public void typeSearch() throws Exception {
+
+        //given
+
+        //given
+        Member member = new Member("loginName", "memberName", "password1!", "e@mail.com");
+
+        Long memberId = memberService.save(member);
+        member.updateType(MemberType.JUNIOR);
+        Team team = new Team("teamName", TeamType.OTHERS);
+        teamRepository.save(team);
+
+        member.addTeam(team);
+
+        //when
+        List<MemberAndTeamTypeDto> resultList = memberService.findByMemberTypeAndTeamType(MemberType.JUNIOR, TeamType.OTHERS);
+        for (MemberAndTeamTypeDto memberAndTeamTypeDto : resultList) {
+            System.out.println("memberAndTeamTypeDto = " + memberAndTeamTypeDto.getMemberId());
+            System.out.println("memberAndTeamTypeDto = " + memberAndTeamTypeDto.getLoginName());
+        }
+        //then
+        assertThat(resultList.size()).isEqualTo(1);
 
     }
 

@@ -1,6 +1,9 @@
 package com.API.api.domain.service;
 
+import com.API.api.domain.dto.MemberAndTeamTypeDto;
 import com.API.api.domain.entity.Member;
+import com.API.api.domain.entity.MemberType;
+import com.API.api.domain.entity.TeamType;
 import com.API.api.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,10 @@ public class MemberService {
 
     public List<Member> findByTeamName(String teamName) {
         return memberRepository.findByTeamName(teamName);
+    }
+
+    public List<MemberAndTeamTypeDto> findByMemberTypeAndTeamType(MemberType memberType, TeamType teamType) {
+        return memberRepository.findByMemberTypeAndTeamTypeDto(memberType, teamType);
     }
 
 

@@ -26,8 +26,4 @@ public class TeamService {
             throw new IllegalStateException("이미 존재하는 팀명");
         }
     }
-
-
-
-
 }
