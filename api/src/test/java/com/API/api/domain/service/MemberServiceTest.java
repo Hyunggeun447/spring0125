@@ -1,12 +1,17 @@
 package com.API.api.domain.service;
 
 import com.API.api.domain.entity.Member;
+import com.API.api.domain.entity.Team;
+import com.API.api.domain.entity.TeamType;
+import com.API.api.domain.repository.TeamRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberServiceTest {
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    TeamRepository teamRepository;
 
     @Test
     public void saveAndValidate() throws Exception {
@@ -58,6 +66,35 @@ class MemberServiceTest {
 
         //then
         assertThat(result1).isEqualTo(result2).isEqualTo(member);
+    }
+
+    @Test
+    public void findByTeamName() throws Exception {
+
+        //given
+
+        //given
+        Member member = new Member("loginName", "memberName", "password1!", "e@mail.com");
+
+        Long memberId = memberService.save(member);
+        Team team = new Team("teamName", TeamType.OTHERS);
+        teamRepository.save(team);
+
+        member.addTeam(team);
+
+        //when
+
+        List<Member> resultList = memberService.findByTeamName("teamName");
+
+        for (Member member1 : resultList) {
+            System.out.println("member1 = " + member1.getMemberName());
+        }
+        //then
+
+        assertThat(resultList.size()).isEqualTo(1);
+        assertThat(resultList).contains(member);
+
+
     }
 
 }
