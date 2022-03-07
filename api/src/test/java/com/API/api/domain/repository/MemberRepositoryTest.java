@@ -131,4 +131,31 @@ class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void 없는로그인아이디조회() throws Exception {
+
+        //given
+
+        //when
+        Member notExistName = memberRepository.findMemberByLoginName("NotExistName");
+        System.out.println("asdfsf = " + notExistName);
+//        null을 반환한다.
+
+        //then
+
+    }
+
+    @Test
+    public void validate() throws Exception {
+
+        //given
+        Member member = new Member("l", "memberName", "password", "e@mail.com");
+
+        Member save = memberRepository.save(member);
+        //when
+
+        //then
+
+    }
+
 }

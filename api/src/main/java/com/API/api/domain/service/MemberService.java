@@ -1,0 +1,29 @@
+package com.API.api.domain.service;
+
+import com.API.api.domain.entity.Member;
+import com.API.api.domain.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    public Long save(Member member) {
+        validSameLoginName(member);
+        memberRepository.save(member);
+        return member.getId();
+    }
+
+    private void validSameLoginName(Member member) {
+        Member memberByLoginName = memberRepository.findMemberByLoginName(member.getLoginName());
+        if (memberByLoginName != null) {
+            throw new IllegalStateException("존재하는 아이디");
+        }
+    }
+
+}
