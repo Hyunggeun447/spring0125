@@ -9,12 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+//@Rollback(value = false)
 class MemberRepositoryTest {
 
     @Autowired
@@ -23,7 +28,7 @@ class MemberRepositoryTest {
     @Autowired
     TeamRepository teamRepository;
 
-//    @BeforeEach
+    @BeforeEach
     public void beforeEach() {
         for (int i = 0; i < 10; i++) {
             Member member = new Member("loginName" + i, "memberName" + i, "!password" + i, "e" + i + "@xxx.com");
@@ -58,13 +63,31 @@ class MemberRepositoryTest {
 
         //then
 
-        Assertions.assertThat(result).isEqualTo(member);
-        Assertions.assertThat(result.getTeam()).isEqualTo(member.getTeam());
-        Assertions.assertThat(teamResult).isEqualTo(team);
+        assertThat(result).isEqualTo(member);
+        assertThat(result.getTeam()).isEqualTo(member.getTeam());
+        assertThat(teamResult).isEqualTo(team);
 
+    }
 
+    @Test
+    public void findByLoginName() throws Exception {
 
+        //when
+        Member result = memberRepository.findMemberByLoginName("loginName0");
 
+        //then
+        assertThat(result.getPassword()).isEqualTo("!password0");
+
+    }
+
+    @Test
+    public void findByEmail() throws Exception {
+
+        //when
+        List<Member> resultList = memberRepository.findByEmail("e1@xxx.com");
+
+        //then
+        assertThat(resultList).containsExactly(memberRepository.findMemberByLoginName("loginName1"));
     }
 
 }

@@ -23,7 +23,6 @@ public class Member {
     @Column(unique = true, updatable = false)
     @NotBlank
     @Size(min = 2, max = 12, message = "2 ~ 12")
-
     private String loginName;
 
     @Column(updatable = false)

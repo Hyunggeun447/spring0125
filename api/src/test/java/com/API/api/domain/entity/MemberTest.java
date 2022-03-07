@@ -2,6 +2,7 @@ package com.API.api.domain.entity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -10,7 +11,6 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class MemberTest {
 
-//    @BeforeEach
 
     @Test
     public void 엔티티테스트() throws Exception {
@@ -35,5 +35,7 @@ class MemberTest {
         assertThat(member.getTeam().getTeamType()).isEqualTo(TeamType.OTHERS);
 
     }
+
+
 
 }
