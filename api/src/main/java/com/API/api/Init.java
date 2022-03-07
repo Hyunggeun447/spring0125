@@ -43,11 +43,11 @@ public class Init {
         public void init1() {
 
             for (int i = 0; i < 25; i++) {
-                Member member = new Member("loginNameA" + i, "memberNameA" + i, "password!A" + i, "e@mail.com");
+                Member member = new Member("loginName" + i, "memberName" + i, "password!" + i, "e@mail.com");
                 em.persist(member);
 
                 member.updateType(MemberType.JUNIOR);
-                Team team = new Team("teamNameA" + i, TeamType.OTHERS);
+                Team team = new Team("teamName" + i, TeamType.OTHERS);
                 em.persist(team);
                 member.addTeam(team);
             }
@@ -57,11 +57,11 @@ public class Init {
         public void init2() {
 
             for (int i = 25; i < 50; i++) {
-                Member member = new Member("loginNameA" + i, "memberNameA" + i, "password!A" + i, "e@mail.com");
+                Member member = new Member("loginName" + i, "memberName" + i, "password!" + i, "e@mail.com");
                 em.persist(member);
 
                 member.updateType(MemberType.SENIOR);
-                Team team = new Team("teamNameA" + i, TeamType.DEVELOPER);
+                Team team = new Team("teamName" + i, TeamType.DEVELOPER);
                 em.persist(team);
                 member.addTeam(team);
             }
@@ -71,11 +71,11 @@ public class Init {
         public void init3() {
 
             for (int i =50; i < 75; i++) {
-                Member member = new Member("loginNameA" + i, "memberNameA" + i, "password!A" + i, "e@mail.com");
+                Member member = new Member("loginName" + i, "memberName" + i, "password!" + i, "e@mail.com");
                 em.persist(member);
 
                 member.updateType(MemberType.SENIOR);
-                Team team = new Team("teamNameA" + i, TeamType.OTHERS);
+                Team team = new Team("teamName" + i, TeamType.OTHERS);
                 em.persist(team);
                 member.addTeam(team);
             }
