@@ -116,4 +116,19 @@ class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void searchTeam() throws Exception {
+
+        //when
+        List<Team> resultList = teamRepository.searchTeamByKeyword("am");
+        for (Team team : resultList) {
+            System.out.println("team = " + team.getTeamName());
+        }
+
+        //then
+        assertThat(resultList.size()).isEqualTo(10);
+//        assertThat(resultList).isEqualTo(teamRepository.findAll());
+
+    }
+
 }
