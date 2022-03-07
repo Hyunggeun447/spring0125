@@ -158,4 +158,20 @@ class MemberRepositoryTest {
 
     }
 
+    @Test
+    public void findByTeamName() throws Exception {
+
+        //when
+
+        List<Member> resultList = memberRepository.findByTeamName("teamName1");
+        for (Member member : resultList) {
+            System.out.println("member = " + member.getMemberName());
+        }
+
+        //then
+        assertThat(resultList.size()).isEqualTo(1);
+        assertThat(resultList).contains(memberRepository.findMemberByLoginName("loginName1"));
+
+    }
+
 }

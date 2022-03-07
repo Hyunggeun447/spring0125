@@ -45,4 +45,19 @@ class MemberServiceTest {
 
     }
 
+    @Test
+    public void findById_LoginName() throws Exception {
+
+        //given
+        Member member = new Member("loginName", "memberName", "password1!", "e@mail.com");
+        Long memberId = memberService.save(member);
+
+        //when
+        Member result1 = memberService.findById(memberId);
+        Member result2 = memberService.findByLoginName("loginName");
+
+        //then
+        assertThat(result1).isEqualTo(result2).isEqualTo(member);
+    }
+
 }

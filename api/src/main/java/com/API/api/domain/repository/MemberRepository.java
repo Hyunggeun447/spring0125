@@ -16,6 +16,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByEmail(String email);
 
+    @Query("select m from Member m join m.team t where t.teamName = :teamName")
+    List<Member> findByTeamName(@Param("teamName") String teamName);
+
+
     @Query("select m from Member m join m.team t where m.memberType = :memberType and t.teamType = :teamType")
     List<Member> findByMemberTypeAndTeamType(@Param("memberType") MemberType memberType,
                                              @Param("teamType") TeamType teamType);

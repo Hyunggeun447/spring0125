@@ -26,4 +26,15 @@ public class MemberService {
         }
     }
 
+    public Member findById(Long id) {
+        return memberRepository.findById(id).get();
+    }
+
+    public Member findByLoginName(String loginName) {
+        return memberRepository.findMemberByLoginName(loginName);
+    }
+
+
+
+
 }
