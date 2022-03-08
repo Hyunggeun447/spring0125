@@ -10,6 +10,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -144,6 +147,49 @@ class MemberServiceTest {
         }
         //then
         assertThat(resultList.size()).isEqualTo(1);
+
+    }
+
+    @Test
+    public void paging() throws Exception {
+
+        //given
+
+        Member member1 = new Member("loginName1", "memberName", "password1!", "e@mail.com");
+        Member member2 = new Member("loginName2", "memberName", "password1!", "e@mail.com");
+        Member member3 = new Member("loginName3", "memberName", "password1!", "e@mail.com");
+        Member member4 = new Member("loginName4", "memberName", "password1!", "e@mail.com");
+
+        Long memberId1 = memberService.save(member1);
+        Long memberId2 = memberService.save(member2);
+        Long memberId3 = memberService.save(member3);
+        Long memberId4 = memberService.save(member4);
+        member1.updateType(MemberType.JUNIOR);
+        member2.updateType(MemberType.JUNIOR);
+        member3.updateType(MemberType.SENIOR);
+        member4.updateType(MemberType.SENIOR);
+        Team team1 = new Team("teamName1", TeamType.OTHERS);
+        Team team2 = new Team("teamName2", TeamType.DEVELOPER);
+        teamRepository.save(team1);
+        teamRepository.save(team2);
+
+        member1.addTeam(team1);
+        member2.addTeam(team1);
+        member3.addTeam(team2);
+        member4.addTeam(team2);
+
+        //when
+        PageRequest pag = PageRequest.of(0, 5);
+        Page<Member> result = memberService.findByTeamPlusPaging("teamName1", pag);
+
+        for (Member member : result) {
+            System.out.println("member = " + member.getLoginName());
+        }
+
+        //then
+        Pageable pageable = result.getPageable();
+        System.out.println("pageable = " + pageable);
+
 
     }
 

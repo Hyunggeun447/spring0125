@@ -9,6 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -186,5 +190,51 @@ class MemberRepositoryTest {
         assertThat(result.getTeamType()).isEqualTo(TeamType.DEVELOPER);
 
     }
+
+    @Test
+    public void paging() throws Exception {
+
+        //given
+        /*Team team = new Team("newTeam", TeamType.DEVELOPER);
+        Member member1 = new Member("log1", "name1", "123!", "2@nae.com");
+        Member member2 = new Member("log2", "name1", "123!", "2@nae.com");
+        Member member3 = new Member("log3", "name1", "123!", "2@nae.com");
+        Member member4 = new Member("log4", "name1", "123!", "2@nae.com");
+        member1.addTeam(team);
+        member2.addTeam(team);
+        member3.addTeam(team);
+        member4.addTeam(team);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+        memberRepository.save(member4);*/
+
+
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        Page<Member> memberPage = memberRepository.findByTeamNameAndPaging("teamName1", pageRequest);
+
+        List<Member> content = memberPage.getContent();
+        System.out.println("content = " + content);
+        Sort sort = memberPage.getSort();
+        System.out.println("sort = " + sort);
+        long totalElements = memberPage.getTotalElements();
+        System.out.println("totalElements = " + totalElements);
+        int size = memberPage.getSize();
+        System.out.println("size = " + size);
+        int number = memberPage.getNumber();
+        System.out.println("number = " + number);
+        int totalPages = memberPage.getTotalPages();
+        System.out.println("totalPages = " + totalPages);
+        int numberOfElements = memberPage.getNumberOfElements();
+        System.out.println("numberOfElements = " + numberOfElements);
+        Pageable pageable = memberPage.getPageable();
+        System.out.println("pageable = " + pageable);
+
+
+        //then
+
+    }
+
+
 
 }

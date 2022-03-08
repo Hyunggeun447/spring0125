@@ -6,6 +6,8 @@ import com.API.api.domain.entity.MemberType;
 import com.API.api.domain.entity.TeamType;
 import com.API.api.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +48,10 @@ public class MemberService {
 
     public List<MemberAndTeamTypeDto> findByMemberTypeAndTeamType(MemberType memberType, TeamType teamType) {
         return memberRepository.findByMemberTypeAndTeamTypeDto(memberType, teamType);
+    }
+
+    public Page<Member> findByTeamPlusPaging(String teamName, Pageable pageable) {
+        return memberRepository.findByTeamNameAndPaging(teamName, pageable);
     }
 
 

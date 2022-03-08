@@ -4,6 +4,8 @@ import com.API.api.domain.dto.MemberAndTeamTypeDto;
 import com.API.api.domain.entity.Member;
 import com.API.api.domain.entity.MemberType;
 import com.API.api.domain.entity.TeamType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +30,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             " where m.memberType = :memberType and t.teamType = :teamType")
     List<MemberAndTeamTypeDto> findByMemberTypeAndTeamTypeDto(@Param("memberType") MemberType memberType,
                                                               @Param("teamType") TeamType teamType);
+
+
+    @Query(value = "select m from Member m join m.team t where t.teamName = :teamName",
+            countQuery = "select count(m) from Member m")
+    Page<Member> findByTeamNameAndPaging(@Param("teamName") String teamName, Pageable pageable);
+
 
 }
