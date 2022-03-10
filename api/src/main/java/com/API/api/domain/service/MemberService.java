@@ -54,6 +54,10 @@ public class MemberService {
         return memberRepository.findByTeamNameAndPaging(teamName, pageable);
     }
 
+    public Page<MemberAndTeamTypeDto> findByTeamPlusPagingDto(String teamName, Pageable pageable) {
+        return memberRepository.findByTeamNameAndPagingDto(teamName, pageable);
+    }
+
 
 
 

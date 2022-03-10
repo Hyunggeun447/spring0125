@@ -23,7 +23,7 @@ public class Init {
 
     private final InitService initService;
 
-//    @PostConstruct
+    @PostConstruct
     public void initDb() {
         initService.init1();
         initService.init2();

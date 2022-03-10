@@ -36,5 +36,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             countQuery = "select count(m) from Member m")
     Page<Member> findByTeamNameAndPaging(@Param("teamName") String teamName, Pageable pageable);
 
+    @Query(value = "select new com.API.api.domain.dto.MemberAndTeamTypeDto(m.id, m.loginName) " +
+            "from Member m join m.team t where t.teamName = :teamName", countQuery = "select count (m) from Member m")
+    Page<MemberAndTeamTypeDto> findByTeamNameAndPagingDto(@Param("teamName") String teamName, Pageable pageable);
+
 
 }
