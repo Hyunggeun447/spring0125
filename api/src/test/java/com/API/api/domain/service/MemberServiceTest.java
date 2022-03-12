@@ -10,9 +10,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -192,5 +190,27 @@ class MemberServiceTest {
 
 
     }
+
+    @Test
+    public void slice() throws Exception {
+
+        //given
+
+        //when
+
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "loginName"));
+        Slice<Member> result = memberService.findAllSlice(pageRequest);
+        System.out.println("result = " + result.getPageable());
+        System.out.println("result = " + result.getContent());
+        System.out.println("result = " + result.getNumber());
+        System.out.println("result = " + result.getSize());
+        System.out.println("result = " + result.getNumberOfElements());
+        System.out.println("result = " + result.getSort());
+
+        //then
+
+    }
+
+
 
 }

@@ -8,6 +8,7 @@ import com.API.api.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +57,11 @@ public class MemberService {
 
     public Page<MemberAndTeamTypeDto> findByTeamPlusPagingDto(String teamName, Pageable pageable) {
         return memberRepository.findByTeamNameAndPagingDto(teamName, pageable);
+    }
+
+    public Slice<Member> findAllSlice(Pageable pageable) {
+        return memberRepository.findAll(pageable);
+
     }
 
 
