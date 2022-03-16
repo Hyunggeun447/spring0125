@@ -43,4 +43,5 @@ public class DecoratorPatternTest {
         decoratorPatternClient.execute();
 
     }
+
 }
