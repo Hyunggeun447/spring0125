@@ -29,10 +29,10 @@ public class ReflectionTest {
         //공통 로직 2 종료
 
     }
-    
+
     @Test
     public void reflectionV1() throws Exception {
-        
+
         //클래스 정보
         Class classHello = Class.forName("hello.proxy.jdkdynamic.ReflectionTest$Hello");
 
@@ -82,6 +82,7 @@ public class ReflectionTest {
             log.info("callA");
             return "A";
         }
+
         public String callB() {
             log.info("callB");
             return "B";
