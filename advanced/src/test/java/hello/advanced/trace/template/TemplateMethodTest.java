@@ -63,7 +63,7 @@ public class TemplateMethodTest {
             }
         };
 
-        log.info("클래스 이름 = {}", template1.getClass());
+//        log.info("클래스 이름 = {}", template1.getClass());
 
         template1.execute();
 
@@ -76,7 +76,7 @@ public class TemplateMethodTest {
             }
         };
 
-        log.info("클래스 이름 = {}", template2.getClass());
+//        log.info("클래스 이름 = {}", template2.getClass());
 
 
         template2.execute();
