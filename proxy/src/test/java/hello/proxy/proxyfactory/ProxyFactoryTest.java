@@ -27,10 +27,14 @@ public class ProxyFactoryTest {
 
         proxy.save();
         proxy.find();
+        proxy.toString();
+        proxy.getClass();
 
         Assertions.assertThat(AopUtils.isAopProxy(proxy)).isTrue();
         Assertions.assertThat(AopUtils.isJdkDynamicProxy(proxy)).isTrue();
         Assertions.assertThat(AopUtils.isCglibProxy(proxy)).isFalse();
+
+
 
     }
 }
