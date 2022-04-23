@@ -3,8 +3,6 @@ package com.API.api.domain.apiController;
 import com.API.api.domain.dto.MemberAndTeamTypeDto;
 import com.API.api.domain.dto.MemberDto;
 import com.API.api.domain.entity.Member;
-import com.API.api.domain.entity.MemberType;
-import com.API.api.domain.entity.TeamType;
 import com.API.api.domain.repository.MemberRepository;
 import com.API.api.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
