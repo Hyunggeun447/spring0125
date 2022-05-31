@@ -1,7 +1,6 @@
 package study.datajpa.repository;
 
 import lombok.RequiredArgsConstructor;
-import study.datajpa.entity.Member;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -13,8 +12,9 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
 
 
     @Override
-    public List<Member> findMemberCustom() {
+    public List findMemberCustom() {
         return em.createQuery("select m from Member m")
                 .getResultList();
     }
+
 }
