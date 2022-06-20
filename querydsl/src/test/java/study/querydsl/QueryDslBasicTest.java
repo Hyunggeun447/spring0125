@@ -355,7 +355,6 @@ public class QueryDslBasicTest {
         for (Tuple tuple : result) {
             System.out.println("tuple = " + tuple);
         }
-
     }
 
     /**
@@ -571,7 +570,6 @@ public class QueryDslBasicTest {
 
     /**
      * 문자 더하기
-     *
      * stringValue -> 문자가 아닌 값들을 String 으로 변환해준다.
      */
     @Test
@@ -588,8 +586,6 @@ public class QueryDslBasicTest {
         for (String s : member1) {
             System.out.println("s = " + s);
         }
-
-
     }
 
     /**
@@ -608,6 +604,7 @@ public class QueryDslBasicTest {
             System.out.println("s = " + s);
         }
     }
+
     @Test
     public void tupleProjection() throws Exception {
         List<Tuple> result = queryFactory
@@ -630,11 +627,13 @@ public class QueryDslBasicTest {
      *    - setter(프로퍼티 접근법) : DTO에 setter, 기본 생성자 필요
      *    - field 이용 : setter 필요없이 바로 필드에 적용
      *    - constructor 이용
-     *
      */
     @Test
     public void findDtoByJPQL() throws Exception {
-        List<MemberDto> result = em.createQuery("select new study.querydsl.dto.MemberDto(m.username, m.age) from Member m", MemberDto.class)
+        List<MemberDto> result =
+            em.createQuery(
+                    "select new study.querydsl.dto.MemberDto(m.username, m.age) from Member m",
+                    MemberDto.class)
                 .getResultList();
 
         //then
@@ -676,6 +675,7 @@ public class QueryDslBasicTest {
             System.out.println("memberDto = " + memberDto);
         }
     }
+
     //Constructor 이용
     @Test
     public void findDtoByConstructor() throws Exception {
@@ -748,8 +748,6 @@ public class QueryDslBasicTest {
 
         List<Member> result = searchMember1(usernameParam, ageParam);
         assertThat(result.size()).isEqualTo(1);
-
-
     }
 
     private List<Member> searchMember1(String usernameCond, Integer ageCond) {
@@ -807,7 +805,6 @@ public class QueryDslBasicTest {
      * 수정, 삭제 벌크 연산
      * 영속성 컨텍스트 vs DB 동기화 문제를 주의해야함.
      * 그래서 영속성 컨텍스트 초기화 시켜줘야한다. 방법은 data jpa -> bulk
-     *
      */
     @Test
     @Commit
@@ -820,7 +817,6 @@ public class QueryDslBasicTest {
 
         em.flush();
         em.clear();
-
     }
 
     @Test
@@ -850,7 +846,6 @@ public class QueryDslBasicTest {
     /**
      * SQL function 호출
      */
-
     @Test
     public void sqlFunction() throws Exception {
         List<String> result = queryFactory
