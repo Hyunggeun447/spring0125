@@ -19,7 +19,6 @@ public class ItemService {
 
     @Transactional
     public Long saveItem(Item item) {
-
         sameItemNameFilter(item);
         itemRepository.save(item);
         return item.getId();
@@ -35,7 +34,7 @@ public class ItemService {
 
     @Transactional
     public void updateItem(Long itemId, String itemName, int price, int stockQuantity, Size size, Color color) {
-        Item item = itemRepository.findById(itemId).get();
+        Item item = itemRepository.findById(itemId).orElseThrow(RuntimeException::new);
         item.setItemName(itemName);
         item.setItemSize(size);
         item.setPrice(price);
@@ -44,7 +43,7 @@ public class ItemService {
     }
 
     public Item findById(Long itemId) {
-        return itemRepository.findById(itemId).get();
+        return itemRepository.findById(itemId).orElseThrow(RuntimeException::new);
     }
 
     public List<Item> findAll() {
