@@ -12,12 +12,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "order_item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
-
-
 
     @Id
     @GeneratedValue
@@ -41,7 +38,6 @@ public class OrderItem {
         orderItem.setItem(item);
         orderItem.setOrderPrice(orderPrice);
         orderItem.setCount(count);
-
         item.removeStock(count);
         return orderItem;
     }
@@ -54,4 +50,19 @@ public class OrderItem {
         return getOrderPrice() * getCount();
     }
 
+    public void changeOrder(Order order) {
+        this.order = order;
+    }
+
+    private void setItem(Item item) {
+        this.item = item;
+    }
+
+    private void setCount(int count) {
+        this.count = count;
+    }
+
+    private void setOrderPrice(int orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 }

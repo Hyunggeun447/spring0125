@@ -17,8 +17,6 @@ public class OrderSearchDto {
     private OrderStatus status;
     private LocalDateTime orderDate;
 
-
-
     @QueryProjection
     public OrderSearchDto(Long id, String loginName, String itemName, int orderPrice, int count, OrderStatus status, LocalDateTime orderDate) {
         this.id = id;

@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 public class Address {
 
     private String address1;
-    private String address2; //detail address
+    private String address2;
 
     protected Address() {
     }

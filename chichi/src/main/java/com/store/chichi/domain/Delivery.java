@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 public class Delivery {
 
     @Id
@@ -23,6 +22,9 @@ public class Delivery {
     private Address address;
 
     @Enumerated(EnumType.STRING)
-    private DeliveryStatus deliveryStatus; //READY, DEPART, COMP
+    private DeliveryStatus deliveryStatus;
 
+    public void changeOrder(Order order) {
+        this.order = order;
+    }
 }

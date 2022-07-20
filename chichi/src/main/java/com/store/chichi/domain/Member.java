@@ -2,6 +2,7 @@ package com.store.chichi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.chichi.domain.order.Order;
+import javax.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -22,14 +22,15 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name; //이름
+    private String name;
 
     @Column(nullable = false)
-    private String loginName; //닉네임Id
+    private String loginName;
 
     @Column(nullable = false)
-    private String password; //비밀번호
+    private String password;
 
+    @Email
     private String eMail;
 
     private String phoneNumber;
@@ -45,15 +46,13 @@ public class Member {
     private MemberGrade memberGrade; //    ADMIN, NORMAL
 
     public Member(String name, String loginName, String password,
-                  String eMail, String phoneNumber) {
+                  String eMail, String phoneNumber, Address address, MemberGrade memberGrade) {
         this.name = name;
         this.loginName = loginName;
         this.password = password;
         this.eMail = eMail;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.orders = orders;
         this.memberGrade = memberGrade;
     }
-
 }

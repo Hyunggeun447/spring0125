@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
@@ -39,7 +38,6 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
@@ -47,8 +45,7 @@ public class Order {
     //연관관계 메서드 order - delivery
     public void addDelivery(Delivery delivery) {
         this.delivery = delivery;
-        delivery.setOrder(this);
-
+        delivery.changeOrder(this);
     }
 
     @OneToMany(mappedBy = "order")
@@ -57,12 +54,12 @@ public class Order {
     //연관관계 메서드 order - orderItem
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
-        orderItem.setOrder(this);
+        orderItem.changeOrder(this);
 
     }
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; //    ORDER, CANCEL
+    private OrderStatus status;
 
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
         Order order = new Order();
@@ -97,4 +94,19 @@ public class Order {
         return totalPrice;
     }
 
+    private void setMember(Member member) {
+        this.member = member;
+    }
+
+    private void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    private void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    private void setStatus(OrderStatus status) {
+        this.status = status;
+    }
 }
