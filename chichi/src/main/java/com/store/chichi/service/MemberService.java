@@ -26,7 +26,6 @@ public class MemberService {
     }
 
     private void checkSameLoginNameMember(Member member) {
-
         List<Member> findLoginName = memberRepository.findByLoginName(member.getLoginName());
         if (!findLoginName.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 아이디입니다.");
@@ -35,27 +34,27 @@ public class MemberService {
 
     @Transactional
     public void updatePassword(Long memberId, String password) {
-        Member member = memberRepository.findById(memberId).get();
-        member.setPassword(password);
+        Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+        member.changePassword(password);
     }
 
     @Transactional
     public void updateMember(Long memberId, String email, String phoneNumber, Address address) {
-        Member member = memberRepository.findById(memberId).get();
-        member.setEMail(email);
-        member.setAddress(address);
-        member.setPhoneNumber(phoneNumber);
+        Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+        member.changeEmail(email);
+        member.changeAddress(address);
+        member.changePhoneNumber(phoneNumber);
     }
 
     @Transactional
     public void updateMemberGrade(Long memberId, MemberGrade grade) {
-        Member member = memberRepository.findById(memberId).get();
-        member.setMemberGrade(grade);
+        Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+        member.changeMemberGrade(grade);
     }
 
 
     public Member findById(Long memberId) {
-        return memberRepository.findById(memberId).get();
+        return memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
     }
 
     public List<Member> findAllMembers() {
@@ -63,7 +62,6 @@ public class MemberService {
     }
 
     public Member findByLoginName(String loginName) {
-//        return memberRepository.findByName(memberName);
         return memberRepository.findMemberByLoginName(loginName);
     }
 

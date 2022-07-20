@@ -16,7 +16,6 @@ import java.util.List;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -25,13 +24,19 @@ public class OrderService {
 
     private final ItemRepository itemRepository;
 
-    public Long order(Long memberId, Long itemId, int count, Address address) {
-        Member member = memberRepository.findById(memberId).get();
-        Item item = itemRepository.findById(itemId).get();
+    public OrderService(OrderRepository orderRepository,
+        MemberRepository memberRepository,
+        ItemRepository itemRepository) {
+        this.orderRepository = orderRepository;
+        this.memberRepository = memberRepository;
+        this.itemRepository = itemRepository;
+    }
 
-        Delivery delivery = new Delivery();
-        delivery.setAddress(address);
-        delivery.setDeliveryStatus(DeliveryStatus.READY);
+    public Long order(Long memberId, Long itemId, int count, Address address) {
+        Member member = memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
+        Item item = itemRepository.findById(itemId).orElseThrow(RuntimeException::new);
+
+        Delivery delivery = new Delivery(address);
 
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
@@ -39,17 +44,13 @@ public class OrderService {
 
         orderRepository.save(order);
         return order.getId();
-
     }
 
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findByLoginNameAndOrderStatus(orderSearch);
-
     }
 
     public List<OrderSearchDto> findOrdersDto(OrderSearch orderSearch) {
         return orderRepository.findByLoginNameAndOrderStatusDto(orderSearch);
-
     }
-
 }

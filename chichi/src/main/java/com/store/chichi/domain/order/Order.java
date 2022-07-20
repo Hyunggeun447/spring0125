@@ -27,7 +27,6 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    //연관관계 메서드 order - member
     public void addMember(Member member) {
         if (this.member != null) {
             member.getOrders().remove(this);
@@ -42,7 +41,6 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    //연관관계 메서드 order - delivery
     public void addDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.changeOrder(this);
@@ -51,11 +49,9 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    //연관관계 메서드 order - orderItem
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.changeOrder(this);
-
     }
 
     @Enumerated(EnumType.STRING)

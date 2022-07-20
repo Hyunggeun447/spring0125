@@ -9,6 +9,5 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("pants")
 @Getter
-@Setter
 public class Pants extends Item{
 }

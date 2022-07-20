@@ -1,7 +1,6 @@
 package com.store.chichi.domain.order;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.store.chichi.domain.order.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

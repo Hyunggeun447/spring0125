@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("shirt")
 @Getter
-@Setter
 public class Shirt extends Item {
 
 

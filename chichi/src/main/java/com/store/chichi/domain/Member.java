@@ -6,7 +6,6 @@ import javax.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -54,5 +53,40 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.memberGrade = memberGrade;
+    }
+
+    public void changePassword(String newPassword) {
+        if (newPassword.isBlank()) {
+            throw new RuntimeException();
+        }
+        this.password = newPassword;
+    }
+
+    public void changeEmail(String newEmail) {
+        if (newEmail.isBlank()) {
+            throw new RuntimeException();
+        }
+        this.eMail = newEmail;
+    }
+
+    public void changeAddress(Address newAddress) {
+        if (newAddress == null) {
+            throw new RuntimeException();
+        }
+        this.address = newAddress;
+    }
+
+    public void changePhoneNumber(String newPhoneNumber) {
+        if (newPhoneNumber.isBlank()) {
+            throw new RuntimeException();
+        }
+        this.phoneNumber = newPhoneNumber;
+    }
+
+    public void changeMemberGrade(MemberGrade newMemberGrade) {
+        if (newMemberGrade == null) {
+            throw new RuntimeException();
+        }
+        this.memberGrade = newMemberGrade;
     }
 }
