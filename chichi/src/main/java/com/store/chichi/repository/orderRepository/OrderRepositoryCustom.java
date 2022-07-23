@@ -11,6 +11,4 @@ public interface OrderRepositoryCustom {
     List<Order> findByLoginNameAndOrderStatus(OrderSearch condition);
 
     List<OrderSearchDto> findByLoginNameAndOrderStatusDto(OrderSearch condition);
-
-
 }

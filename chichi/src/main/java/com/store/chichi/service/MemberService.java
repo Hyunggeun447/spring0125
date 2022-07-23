@@ -22,7 +22,6 @@ public class MemberService {
         checkSameLoginNameMember(member);
         memberRepository.save(member);
         return member.getId();
-
     }
 
     private void checkSameLoginNameMember(Member member) {
@@ -52,7 +51,6 @@ public class MemberService {
         member.changeMemberGrade(grade);
     }
 
-
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(RuntimeException::new);
     }
@@ -64,6 +62,4 @@ public class MemberService {
     public Member findByLoginName(String loginName) {
         return memberRepository.findMemberByLoginName(loginName);
     }
-
-
 }

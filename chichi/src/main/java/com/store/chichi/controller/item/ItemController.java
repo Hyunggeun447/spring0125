@@ -40,7 +40,7 @@ public class ItemController {
         }
 
         Item item = new Shirt();
-        item.setItemName(form.getName());
+        item.changeItemName(form.getName());
         item.setPrice(form.getPrice());
         item.setStockQuantity(form.getStockQuantity());
         item.setItemColor(form.getColor());

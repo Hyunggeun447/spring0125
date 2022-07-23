@@ -5,7 +5,6 @@ import static com.store.chichi.domain.item.QItem.item;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import com.store.chichi.domain.item.Item;
-import com.store.chichi.domain.item.QItem;
 import java.util.List;
 import javax.persistence.EntityManager;
 

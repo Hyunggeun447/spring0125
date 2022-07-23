@@ -13,8 +13,6 @@ public class ChichiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChichiApplication.class, args);
-
-
 	}
 
 }

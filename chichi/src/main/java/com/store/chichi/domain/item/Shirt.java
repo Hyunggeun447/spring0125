@@ -1,7 +1,6 @@
 package com.store.chichi.domain.item;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -9,6 +8,5 @@ import javax.persistence.*;
 @DiscriminatorValue("shirt")
 @Getter
 public class Shirt extends Item {
-
 
 }

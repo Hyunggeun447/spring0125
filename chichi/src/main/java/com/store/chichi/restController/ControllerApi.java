@@ -13,15 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 public class ControllerApi {
 
     private final OrderService orderService;
-
-    //    private final MemberRepository memberRepository;
     private final MemberService memberService;
 
-//    @GetMapping("/orders/list/api")
+    public ControllerApi(OrderService orderService,
+        MemberService memberService) {
+        this.orderService = orderService;
+        this.memberService = memberService;
+    }
+
+    //    @GetMapping("/orders/list/api")
     public List<OrderSearchDto> orderDtoListApi(OrderSearch condition) {
         List<OrderSearchDto> ordersDto = orderService.findOrdersDto(condition);
         return ordersDto;

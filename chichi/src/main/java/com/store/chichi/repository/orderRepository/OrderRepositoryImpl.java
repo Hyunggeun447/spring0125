@@ -10,7 +10,6 @@ import java.util.List;
 
 import static com.store.chichi.domain.QMember.*;
 import static com.store.chichi.domain.QOrderItem.*;
-import static com.store.chichi.domain.item.QItem.*;
 import static com.store.chichi.domain.order.QOrder.*;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
@@ -53,7 +52,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .fetch();
     }
 
-
     private BooleanExpression orderStatusEq(OrderStatus orderStatus) {
         if (orderStatus != null) {
             return order.status.eq(orderStatus);
@@ -66,6 +64,4 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         return StringUtils.hasText(loginName) ? member.loginName.eq(loginName) : null;
     }
-
-
 }

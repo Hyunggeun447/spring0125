@@ -1,8 +1,6 @@
 package com.store.chichi.web.intercepter;
 
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,8 +16,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             response.sendRedirect("/login?redirectURL=" + requestURI);
             return false;
         }
-
         return true;
     }
-
 }

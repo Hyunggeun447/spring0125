@@ -8,7 +8,6 @@ import com.store.chichi.domain.order.OrderSearchDto;
 import com.store.chichi.repository.itemRepository.ItemRepository;
 import com.store.chichi.repository.memberRepository.MemberRepository;
 import com.store.chichi.repository.orderRepository.OrderRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
