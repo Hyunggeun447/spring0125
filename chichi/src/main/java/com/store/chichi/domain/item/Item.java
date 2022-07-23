@@ -25,8 +25,10 @@ public abstract class Item {
     private Color itemColor;
 
     private LocalDateTime generateTime;
-    private int price;
-    private int stockQuantity;
+
+    private Integer price;
+
+    private Integer stockQuantity;
 
     public void addStock(int quantity) {
         this.stockQuantity += quantity;
@@ -39,4 +41,23 @@ public abstract class Item {
         this.stockQuantity -= quantity;
     }
 
+    public void changeItemName(String newItemName) {
+        this.itemName = newItemName;
+    }
+
+    public void changeItemSize(Size newItemSize) {
+        this.itemSize = newItemSize;
+    }
+
+    public void changePrice(Integer newPrice) {
+        this.price = newPrice;
+    }
+
+    public void changeStockQuantity(Integer newStockQuantity) {
+        this.stockQuantity = newStockQuantity;
+    }
+
+    public void changeColor(Color newColor) {
+        this.itemColor = newColor;
+    }
 }

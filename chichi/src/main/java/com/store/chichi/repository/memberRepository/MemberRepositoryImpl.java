@@ -11,6 +11,4 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     public MemberRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
-
-
 }

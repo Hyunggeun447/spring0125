@@ -35,11 +35,11 @@ public class ItemService {
     @Transactional
     public void updateItem(Long itemId, String itemName, int price, int stockQuantity, Size size, Color color) {
         Item item = itemRepository.findById(itemId).orElseThrow(RuntimeException::new);
-        item.setItemName(itemName);
-        item.setItemSize(size);
-        item.setPrice(price);
-        item.setStockQuantity(stockQuantity);
-        item.setItemColor(color);
+        item.changeItemName(itemName);
+        item.changeItemSize(size);
+        item.changePrice(price);
+        item.changeStockQuantity(stockQuantity);
+        item.changeColor(color);
     }
 
     public Item findById(Long itemId) {
@@ -57,6 +57,4 @@ public class ItemService {
     public void deleteItemById(Long itemId) {
         itemRepository.deleteById(itemId);
     }
-
-
 }

@@ -8,5 +8,4 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
 
     List<Item> findByItemName(String itemName);
-
 }
