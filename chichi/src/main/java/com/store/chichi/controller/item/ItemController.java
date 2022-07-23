@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -27,13 +26,8 @@ public class ItemController {
         return "items/createForm";
     }
 
-    /**
-     * ModelAttribute 이름 주의할 것
-     * 나중에 세터 없에는 방법을 강구할 것
-     */
     @PostMapping("/items/new")
     public String createItem(@Validated @ModelAttribute("form") ItemCreateForm form, BindingResult bindingResult) {
-
 
         if (bindingResult.hasErrors()) {
             return "items/createForm";
@@ -41,11 +35,10 @@ public class ItemController {
 
         Item item = new Shirt();
         item.changeItemName(form.getName());
-        item.setPrice(form.getPrice());
-        item.setStockQuantity(form.getStockQuantity());
-        item.setItemColor(form.getColor());
-        item.setItemSize(form.getSize());
-        item.setGenerateTime(LocalDateTime.now());
+        item.changePrice(form.getPrice());
+        item.changeStockQuantity(form.getStockQuantity());
+        item.changeColor(form.getColor());
+        item.changeItemSize(form.getSize());
 
         itemService.saveItem(item);
         return "redirect:/";

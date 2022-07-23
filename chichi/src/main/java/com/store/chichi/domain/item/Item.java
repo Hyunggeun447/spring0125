@@ -24,7 +24,7 @@ public abstract class Item {
     @Enumerated
     private Color itemColor;
 
-    private LocalDateTime generateTime;
+    private LocalDateTime generateTime = LocalDateTime.now();
 
     private Integer price;
 
