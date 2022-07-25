@@ -46,13 +46,11 @@ public class MemberController {
             return "members/createMemberForm";
         }
 
-        Member member = new Member(form.getName(),form.getLoginName(),form.getPassword(),form.getEMail(),form.getPhoneNumber());
         Address address = new Address(form.getAddress1(),form.getAddress2());
-        member.setAddress(address);
-        member.setMemberGrade(MemberGrade.NORMAL);
-
+        Member member = new Member(
+            form.getName(), form.getLoginName(), form.getPassword(),
+            form.getEMail(), form.getPhoneNumber(), address);
         memberService.join(member);
-
         return "redirect:/";
 
     }
@@ -63,6 +61,4 @@ public class MemberController {
         model.addAttribute("members", allMembers);
         return "members/memberList";
     }
-
-
 }

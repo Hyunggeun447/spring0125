@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class ItemController {
 
     private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @GetMapping("/items/new")
     public String createItemForm(Model model) {
@@ -48,7 +51,6 @@ public class ItemController {
     public String listItem(Model model) {
         List<Item> items = itemService.findAll();
         model.addAttribute("items", items);
-
         return "items/itemList";
     }
 }

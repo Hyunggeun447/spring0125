@@ -30,6 +30,7 @@ public class ItemCreateForm {
     private Color color;
 
     final int minPrice = 1000;
+
     @NotNull(message = "가격은 필수입니다.")
     @Min(message = "최소값을 만족하지 못합니다. 최소값 : " + minPrice  , value = minPrice) //value는 final
     private Integer price;

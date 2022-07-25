@@ -20,12 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
     private final MemberService memberService;
     private final ItemService itemService;
+
+    public OrderController(OrderService orderService,
+        MemberService memberService, ItemService itemService) {
+        this.orderService = orderService;
+        this.memberService = memberService;
+        this.itemService = itemService;
+    }
 
     @GetMapping("/order")
     public String createOrderForm(Model model) {
@@ -34,7 +40,6 @@ public class OrderController {
         model.addAttribute("items", items);
         model.addAttribute("members", members);
         return "order/orderForm";
-
     }
 
     @PostMapping("/order")
@@ -54,6 +59,4 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "order/orderList";
     }
-
-
 }

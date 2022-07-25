@@ -45,14 +45,14 @@ public class Member {
     private MemberGrade memberGrade; //    ADMIN, NORMAL
 
     public Member(String name, String loginName, String password,
-                  String eMail, String phoneNumber, Address address, MemberGrade memberGrade) {
+                  String eMail, String phoneNumber, Address address) {
         this.name = name;
         this.loginName = loginName;
         this.password = password;
         this.eMail = eMail;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.memberGrade = memberGrade;
+        this.memberGrade = MemberGrade.NORMAL;
     }
 
     public void changePassword(String newPassword) {
